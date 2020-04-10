@@ -1,0 +1,32 @@
+(
+        <>
+          <pre>
+              {data.instances.rows.map(row => (
+                <pre key={row[0]}>{JSON.stringify(row, null, 2)}</pre>
+              ))}
+          </pre>
+          <div style={{fontSize: '0.8rem'}}>
+            Page {data.instances.metaData.pager.page} of{' '}
+            {data.instances.metaData.pager.pageCount}
+          </div>
+          <button
+            disabled={data.instances.metaData.pager.page === 1}
+            onClick={() =>
+              refetch({page: data.instances.metaData.pager.page - 1})
+            }
+          >
+            &lt;- Previous
+          </button>
+          <button
+            disabled={
+              data.instances.metaData.pager.page ===
+              data.instances.metaData.pager.pageCount
+            }
+            onClick={() =>
+              refetch({page: 1, query: 'Kelly'})
+            }
+          >
+            Next -&gt;
+          </button>
+        </>
+      )

@@ -1,0 +1,23 @@
+{
+  "name": "poe-print",
+  "version": "1.0.0",
+  "description": "",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "scripts": {
+    "build": "d2-app-scripts build",
+    "start": "d2-app-scripts start",
+    "test": "d2-app-scripts test"
+  },
+  "devDependencies": {
+    "@dhis2/cli-app-scripts": "^4.0.0"
+  },
+  "dependencies": {
+    "@dhis2/app-runtime": "^2.1.1",
+    "antd": "^4.1.2",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-to-print": "^2.6.3"
+  }
+}
