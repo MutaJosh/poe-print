@@ -14,6 +14,7 @@ import {Store} from "./Store";
 const MyApp = () => {
   const engine = useDataEngine();
   const store = new Store(engine);
+  console.log(store);
 
   return (
     <Provider value={store}>
@@ -28,6 +29,6 @@ const MyApp = () => {
         </Switch>
       </Router>
     </Provider>
-  );
-}
+  )
+};
 export default MyApp
