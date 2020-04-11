@@ -2,3 +2,10 @@ img {
   width: 100%;
   height: auto;
 }
+
+.table-row-light {
+  background-color: #ffffff;
+}
+.table-row-dark {
+  background-color: #fbfbfb;
+}
