@@ -20,7 +20,7 @@ const InstanceData = observer(() => {
   const verifier = `${store.currentInstance.instance} - ${store.currentInstance.sB1IHYu2xQT}`;
   return (<div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
     <div style={{display: 'flex', flexDirection: 'column'}}>
-      <QrCode value={verifier} style={{marginBottom: 20, width: 64, height: 64}} renderAs="svg"/>
+
     </div>
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{
@@ -59,7 +59,7 @@ const InstanceData = observer(() => {
           </div>
 
         </div>
-        <div style={{width: 200, height: 200, background: 'yellow', overflow:'hidden', marginLeft: 'auto', float: 'right'}}>
+        <div style={{width: 100, height: 150, background: 'yellow', overflow:'hidden', marginLeft: 'auto', float: 'right'}}>
           <img src={imageUrl} alt="Image"/>
         </div>
       </div>
@@ -126,6 +126,9 @@ const InstanceData = observer(() => {
               <p style={{padding: 0, margin: 0}}>{store.currentInstance.x9YWFwwuQnG}</p>
             </div>
           </div>
+          <div style={{marginTop: 20}}>
+            <QrCode value={verifier} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
+          </div>
         </div>
       </div>
     </div>
@@ -159,6 +162,39 @@ const InstanceData = observer(() => {
           <div style={{marginTop: 5}}>
             <span>Referred for further investigation:</span>
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.EZwIFcKvSes}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style={{display: 'flex',flexDirection: 'column'}} className="approval">
+      <style type="text/css">
+        {`@media print {.approval { display: none; }}`}
+      </style>
+      <div style={{
+        width: '100%',
+        background: '#d8dce0',
+        height: 50,
+        display: 'flex',
+        alignItems: 'center',
+        alignContent: 'center',
+        paddingLeft: 20
+      }}>
+        Approval
+      </div>
+      <div style={{display: 'flex', padding: 20}}>
+        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{display: 'flex',flexDirection: 'column', flexBasis: '100%', flex: 1, width: '50%'}}>
+              <span>Approved by:</span>
+            </div>
+            <div style={{display: 'flex',flexDirection: 'column', flexBasis: '100%', flex: 1}}>
+              <span>Official Stamp: </span>
+            </div>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{marginTop: 5}}>
+              <span>Date: </span>
+            </div>
           </div>
         </div>
       </div>
