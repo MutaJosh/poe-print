@@ -19,16 +19,16 @@ export class Store {
     const {trackedEntityInstances} = await this.engine.query(this.currentQuery);
     this.trackedEntityInstances = trackedEntityInstances;
     this.loading = false;
-  }
+  };
 
   get currentQuery() {
     let params = {
       page: this.page,
       totalPages: 'true',
       ouMode: 'ALL',
-      program: 'IpHINAT79UW',
+      program: 'nBWFG3fYC8N',
       pageSize: this.pageSize
-    }
+    };
     if (this.query !== '') {
       params = {...params, query: `LIKE:${this.query}`}
     }
@@ -41,6 +41,7 @@ export class Store {
   }
 
   get columns() {
+    // const attributes = ["Instance", "Full Names"];
     return this.trackedEntityInstances.headers.map((a, i) => {
       return {
         key: a.name,
@@ -48,9 +49,9 @@ export class Store {
         dataIndex: a.name,
         render: (text, row) => {
           if (i === 0) {
-            return <Link to={`/${row[0]}`}>{row[i]}</Link>
+            return; <Link to={`/${row[0]}`}>{row[i]}</Link>
           } else {
-            return <div>{row[i]}</div>
+            return; <div>{row[i]}</div>
           }
         }
       }

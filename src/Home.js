@@ -10,7 +10,7 @@ export const Home = observer(() => {
     store.queryData();
   }, [store]);
   return <div style={{padding: 10, background: '#F7F7F7', 'minHeight': '95vh'}}>
-    <Card title="Indicators">
+    <Card title="Registered and allowed travellers into Uganda - COVID19 Response" >
       <Table
         columns={store.columns}
         dataSource={store.trackedEntityInstances.rows}

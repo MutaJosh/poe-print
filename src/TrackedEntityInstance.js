@@ -1,15 +1,24 @@
 import React, {useRef} from 'react';
 import ReactToPrint from 'react-to-print';
 import {useParams} from 'react-router-dom'
-import {Button, Descriptions} from "antd";
+import {Button, Descriptions, Menu} from "antd";
+import QrCode from 'qrcode.react';
+
+import {
+  PrinterOutlined, EyeOutlined, HomeOutlined
+} from '@ant-design/icons';
+
 
 class Instance extends React.Component {
   render() {
     return (<div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
       <div style={{display: 'flex', flexDirection: 'column'}}>
+        <QrCode value="OivI21UUUhG" style={{marginBottom: 20, width: 64, height: 64}} renderAs="svg" />
+      </div>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <div style={{
           width: '100%',
-          background: 'gray',
+          background: '#d8dce0',
           height: 50,
           display: 'flex',
           alignItems: 'center',
@@ -43,7 +52,7 @@ class Instance extends React.Component {
             </div>
 
           </div>
-          <div style={{width: 350, height: 250, background: 'yellow', marginLeft: 'auto', marginRight: 100}}>
+          <div style={{width: 100, height: 150, background: 'yellow', marginLeft: 'auto', float: 'right'}}>
           </div>
         </div>
       </div>
@@ -52,7 +61,7 @@ class Instance extends React.Component {
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <div style={{
           width: '100%',
-          background: 'gray',
+          background: '#d8dce0',
           height: 50,
           display: 'flex',
           alignItems: 'center',
@@ -114,7 +123,7 @@ class Instance extends React.Component {
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <div style={{
           width: '100%',
-          background: 'gray',
+          background: '#d8dce0',
           height: 50,
           display: 'flex',
           alignItems: 'center',
@@ -147,12 +156,28 @@ class Instance extends React.Component {
 export const TrackedEntityInstance = () => {
   const componentRef = useRef();
   return (
-    <div>
-      <ReactToPrint
-        trigger={() => <button>Print this out!</button>}
-        content={() => componentRef.current}
-      />
-      <Instance ref={componentRef}/>
-    </div>
+      <div>
+        <Menu mode="horizontal">
+
+          <Menu.Item key="print" >
+
+            <ReactToPrint
+                trigger={() => <li><PrinterOutlined /> Print this pass</li>}
+                content={() => componentRef.current}
+            />
+          </Menu.Item>
+          <Menu.Item key="group" >
+            <EyeOutlined />
+            View UAG837Q
+          </Menu.Item>
+
+          <Menu.Item key="home" >
+            <HomeOutlined />
+            Back to List
+          </Menu.Item>
+        </Menu>
+
+        <Instance ref={componentRef}/>
+      </div>
   );
 }
