@@ -5,7 +5,10 @@ img {
 
 .table-row-light {
   background-color: #ffffff;
+  cursor: pointer;
 }
+
 .table-row-dark {
   background-color: #fbfbfb;
+  cursor: pointer;
 }
