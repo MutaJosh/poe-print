@@ -1,0 +1,30 @@
+0: {key: "instance", title: "Instance", dataIndex: "instance", render: ƒ}
+1: {key: "created", title: "Created", dataIndex: "created", render: ƒ}
+2: {key: "lastupdated", title: "Last updated", dataIndex: "lastupdated", render: ƒ}
+3: {key: "ou", title: "Organisation unit", dataIndex: "ou", render: ƒ}
+4: {key: "ouname", title: "Organisation unit name", dataIndex: "ouname", render: ƒ}
+5: {key: "te", title: "Tracked entity type", dataIndex: "te", render: ƒ}
+6: {key: "inactive", title: "Inactive", dataIndex: "inactive", render: ƒ}
+7: {key: "CLzIR1Ye97b", title: "POE Generated ID", dataIndex: "CLzIR1Ye97b", render: ƒ}
+8: {key: "sB1IHYu2xQT", title: "Full Names", dataIndex: "sB1IHYu2xQT", render: ƒ}
+9: {key: "XvETY1aTxuB", title: "Nationality", dataIndex: "XvETY1aTxuB", render: ƒ}
+10: {key: "UJiu0P8GvHt", title: "Date of arrival", dataIndex: "UJiu0P8GvHt", render: ƒ}
+11: {key: "g4LJbkM0R24", title: "Age (years)", dataIndex: "g4LJbkM0R24", render: ƒ}
+12: {key: "FZzQbW8AWVd", title: "Sex", dataIndex: "FZzQbW8AWVd", render: ƒ}
+13: {key: "oUqWGeHjj5C", title: "National ID (NIN)/Passport No", dataIndex: "oUqWGeHjj5C", render: ƒ}
+14: {key: "cW0UPEANS5t", title: "Country of Departure", dataIndex: "cW0UPEANS5t", render: ƒ}
+15: {key: "pxcXhmjJeMv", title: "Country of Transit", dataIndex: "pxcXhmjJeMv", render: ƒ}
+16: {key: "h6aZFN4DLcR", title: "Vehicle Reg. number", dataIndex: "h6aZFN4DLcR", render: ƒ}
+17: {key: "wJpIzoGlb9j", title: "Name of countries visited in the last 14 days: Country 1", dataIndex: "wJpIzoGlb9j", render: ƒ}
+18: {key: "zhWTXIwd6U1", title: "Name of countries visited in the last 14 days: Country 2", dataIndex: "zhWTXIwd6U1", render: ƒ}
+19: {key: "x9YWFwwuQnG", title: "Name of countries visited in the last 14 days: Country 3", dataIndex: "x9YWFwwuQnG", render: ƒ}
+20: {key: "ooK7aSiAaGq", title: "Physical address while in Uganda (Hotel/village/town/district)", dataIndex: "ooK7aSiAaGq", render: ƒ}
+21: {key: "eH7YTWgoHgo", title: "Planned duration of stay  (in Days) while in Uganda", dataIndex: "eH7YTWgoHgo", render: ƒ}
+22: {key: "E7u9XdW24SP", title: "Case Phone Contact or Next of Kin contact", dataIndex: "E7u9XdW24SP", render: ƒ}
+23: {key: "AsnwhQvSeMy", title: "Picture of Traveller", dataIndex: "AsnwhQvSeMy", render: ƒ}
+24: {key: "QUrkIanwcHD", title: "Measured temperature", dataIndex: "QUrkIanwcHD", render: ƒ}
+25: {key: "NuRldDwq0AJ", title: "Has the specimen been taken?", dataIndex: "NuRldDwq0AJ", render: ƒ}
+26: {key: "SI7jnNQpEQM", title: "v3: Type of Specimen", dataIndex: "SI7jnNQpEQM", render: ƒ}
+27: {key: "Bh19lOSuiUC", title: "v3: Type of Test", dataIndex: "Bh19lOSuiUC", render: ƒ}
+28: {key: "Ep6evsVocKY", title: "Isolated", dataIndex: "Ep6evsVocKY", render: ƒ}
+29: {key: "EZwIFcKvSes", title: "Referred for further investigation", dataIndex: "EZwIFcKvSes", render: ƒ}
