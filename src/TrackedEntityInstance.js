@@ -17,10 +17,10 @@ const InstanceData = observer(() => {
   const { baseUrl, apiVersion } = useConfig();
 
   const imageUrl = `${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`;
-
+  const verifier = `${store.currentInstance.instance} - ${store.currentInstance.sB1IHYu2xQT}`;
   return (<div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
     <div style={{display: 'flex', flexDirection: 'column'}}>
-      <QrCode value="OivI21UUUhG" style={{marginBottom: 20, width: 64, height: 64}} renderAs="svg"/>
+      <QrCode value={verifier} style={{marginBottom: 20, width: 64, height: 64}} renderAs="svg"/>
     </div>
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{
@@ -92,6 +92,10 @@ const InstanceData = observer(() => {
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.pxcXhmjJeMv}</span>
           </div>
           <div style={{marginTop: 5}}>
+            <span>Vehicle registration number:</span>
+            <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.h6aZFN4DLcR}</span>
+          </div>
+          <div style={{marginTop: 5}}>
             <span>Date and Time of entry:</span>
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.UJiu0P8GvHt}</span>
           </div>
@@ -142,7 +146,11 @@ const InstanceData = observer(() => {
         <div style={{display: 'flex', flexDirection: 'column'}}>
           <div>
             <span>Measured temperature:</span>
-            <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.QUrkIanwcHD}&#8451;</span>
+            <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.QUrkIanwcHD}</span>
+          </div>
+          <div style={{marginTop: 5}}>
+            <span>Has the specimen been taken?</span>
+            <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.NuRldDwq0AJ}</span>
           </div>
           <div style={{marginTop: 5}}>
             <span>Isolated:</span>
@@ -166,6 +174,7 @@ class Instance extends React.Component {
 
 export const TrackedEntityInstance = () => {
   const componentRef = useRef();
+  const store = useStore();
   return (
     <div>
       <Menu mode="horizontal">
@@ -177,7 +186,7 @@ export const TrackedEntityInstance = () => {
         </Menu.Item>
         <Menu.Item key="group">
           <EyeOutlined/>
-          View UAG837Q
+          View {store.currentInstance.h6aZFN4DLcR}
         </Menu.Item>
 
         <Menu.Item key="home">
