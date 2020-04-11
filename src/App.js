@@ -10,12 +10,11 @@ import {TrackedEntityInstance} from "./TrackedEntityInstance";
 import {Home} from "./Home";
 import {Provider} from "./context/context";
 import {Store} from "./Store";
+import './App.css'
 
 const MyApp = () => {
   const engine = useDataEngine();
   const store = new Store(engine);
-  console.log(store);
-
   return (
     <Provider value={store}>
       <Router>
