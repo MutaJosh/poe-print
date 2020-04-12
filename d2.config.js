@@ -1,5 +1,5 @@
 const config = {
-    title: 'Covid19 Pass',
+    title: 'Covid-19 Pass',
     description: 'An app for printing Authorized Travel Pass for Cargo Drivers and crews only into a country implementing lockdown',
     type: 'app',
 
