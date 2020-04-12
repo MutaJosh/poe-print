@@ -67,7 +67,7 @@ export class Store {
   }
 
   get columns() {
-    const attributes = ["CLzIR1Ye97b", "sB1IHYu2xQT", "XvETY1aTxuB", "UJiu0P8GvHt", "g4LJbkM0R24", "FZzQbW8AWVd", "oUqWGeHjj5C"];
+    const attributes = ["CLzIR1Ye97b", "sB1IHYu2xQT", "XvETY1aTxuB", "UJiu0P8GvHt", "g4LJbkM0R24", "FZzQbW8AWVd", "oUqWGeHjj5C", "ouname"];
     return this.trackedEntityInstances.headers.map((a, i) => {
       return {
         key: a.name,

@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import ReactToPrint from 'react-to-print';
 import {Link} from 'react-router-dom'
-import { Menu} from "antd";
+import { Layout, Menu, Button } from "antd";
 import QrCode from 'qrcode.react';
 import { useConfig } from '@dhis2/app-runtime'
 
@@ -12,15 +12,19 @@ import {
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 
+const { Header, Content, Footer } = Layout;
+
 const InstanceData = observer(() => {
+
   const store = useStore();
   const { baseUrl, apiVersion } = useConfig();
 
   const imageUrl = `${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`;
   const verifier = `${store.currentInstance.instance} - ${store.currentInstance.sB1IHYu2xQT}`;
+
   return (<div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
     <div style={{display: 'flex', flexDirection: 'column'}}>
-      <QrCode value={verifier} style={{marginBottom: 20, width: 64, height: 64}} renderAs="svg"/>
+        <img src="moh.png" style={{width: '64px', marginBottom: '10px'}}/>
     </div>
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{
@@ -59,8 +63,8 @@ const InstanceData = observer(() => {
           </div>
 
         </div>
-        <div style={{width: 200, height: 200, background: 'yellow', overflow:'hidden', marginLeft: 'auto', float: 'right'}}>
-          <img src={imageUrl} alt="Image"/>
+        <div style={{width: 100, height: 150, background: 'yellow', overflow:'hidden', marginLeft: 'auto', float: 'right'}}>
+          <img src={imageUrl} alt="Image" style={{maxWidth: '100%',maxHeight: '100%', display: 'block'}}/>
         </div>
       </div>
     </div>
@@ -82,6 +86,7 @@ const InstanceData = observer(() => {
           <div>
             <span>Point of Entry:</span>
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}></span>
+            <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.ouname}</span>
           </div>
           <div style={{marginTop: 5}}>
             <span>Country of Departure:</span>
@@ -126,6 +131,9 @@ const InstanceData = observer(() => {
               <p style={{padding: 0, margin: 0}}>{store.currentInstance.x9YWFwwuQnG}</p>
             </div>
           </div>
+          <div style={{marginTop: 20}}>
+            <QrCode value={verifier} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
+          </div>
         </div>
       </div>
     </div>
@@ -140,7 +148,7 @@ const InstanceData = observer(() => {
         alignContent: 'center',
         paddingLeft: 20
       }}>
-        Novel Coronavirus 2019 Investigations
+        COVID-19 Surveillance Investigations
       </div>
       <div style={{display: 'flex', padding: 20}}>
         <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -163,6 +171,39 @@ const InstanceData = observer(() => {
         </div>
       </div>
     </div>
+    <div style={{display: 'flex',flexDirection: 'column'}} className="approval">
+      <style type="text/css">
+        {`@media print {.approval { display: none; }}`}
+      </style>
+      <div style={{
+        width: '100%',
+        background: '#d8dce0',
+        height: 50,
+        display: 'flex',
+        alignItems: 'center',
+        alignContent: 'center',
+        paddingLeft: 20
+      }}>
+        Approval
+      </div>
+      <div style={{display: 'flex', padding: 20}}>
+        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{display: 'flex',flexDirection: 'column', flexBasis: '100%', flex: 1, width: '50%'}}>
+              <span>Approved by:</span>
+            </div>
+            <div style={{display: 'flex',flexDirection: 'column', flexBasis: '100%', flex: 1}}>
+              <span>Official Stamp: </span>
+            </div>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div style={{marginTop: 5}}>
+              <span>Date: </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>)
 })
 
@@ -177,16 +218,18 @@ export const TrackedEntityInstance = () => {
   const store = useStore();
   return (
     <div>
-      <Menu mode="horizontal">
-        <Menu.Item key="print">
+      <Menu mode="horizontal" theme="light"  defaultSelectedKeys={['print']}>
+        <Menu.Item key="print" style={{marginLeft: 20}}>
           <ReactToPrint
-            trigger={() => <span><PrinterOutlined/> Print this pass</span>}
+            trigger={() => <span>
+                 <PrinterOutlined/> PRINT PASS
+                </span>}
             content={() => componentRef.current}
           />
         </Menu.Item>
         <Menu.Item key="group">
           <EyeOutlined/>
-          View {store.currentInstance.h6aZFN4DLcR}
+          Other travelers on {store.currentInstance.h6aZFN4DLcR}
         </Menu.Item>
 
         <Menu.Item key="home">
