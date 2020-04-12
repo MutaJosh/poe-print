@@ -27,8 +27,11 @@ export const Home = observer(() => {
   }, [store]);
 
   return <div style={{padding: 10, background: '#F7F7F7', 'minHeight': '95vh'}}>
-    <Card title="Registered and allowed travellers into Uganda - COVID19 Response"
-          extra={<SettingOutlined style={{fontSize: '24px'}} onClick={showDrawer}/>}>
+    <Card
+        title="Registered and allowed travellers into Uganda - COVID19 Response"
+        extra={<SettingOutlined style={{fontSize: '24px'}} onClick={showDrawer}/>}
+        bodyStyle={{overflow: "auto"}}
+        >
       <Search
         size="large"
         placeholder="input search text"
@@ -49,6 +52,7 @@ export const Home = observer(() => {
         columns={store.columns}
         dataSource={store.trackedEntityInstances.rows}
         rowKey={(row) => row[0]}
+        size="middle"
         onChange={store.handleChange}
         pagination={{
           showSizeChanger: true,

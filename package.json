@@ -1,13 +1,18 @@
 {
   "name": "Covid19-Pass",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "An app for printing Authorized Travel Pass for Cargo drivers and crew members into a country implmenting National Covid-19 Lockdown",
   "license": "BSD-3-Clause",
   "private": true,
   "scripts": {
     "build": "d2-app-scripts build",
     "start": "d2-app-scripts start",
     "test": "d2-app-scripts test"
+  },
+  "author": {
+    "name": "HISP Uganda",
+    "email": "info@hispuganda.org",
+    "url": "http://hispuganda.org/covid-19-pass"
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^4.0.0"
