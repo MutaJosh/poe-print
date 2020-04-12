@@ -15,6 +15,9 @@ import './App.css'
 const MyApp = () => {
   const engine = useDataEngine();
   const store = new Store(engine);
+  useEffect(() => {
+    store.queryOptions();
+  }, [store])
   return (
     <Provider value={store}>
       <Router>

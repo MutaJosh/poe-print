@@ -1,9 +1,9 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import ReactToPrint from 'react-to-print';
-import {Link} from 'react-router-dom'
-import { Layout, Menu, Button } from "antd";
+import {Link, useHistory} from 'react-router-dom'
+import {Layout, Menu, Button, Modal, Table} from "antd";
 import QrCode from 'qrcode.react';
-import { useConfig } from '@dhis2/app-runtime'
+import {useConfig} from '@dhis2/app-runtime'
 
 
 import {
@@ -12,19 +12,18 @@ import {
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 
-const { Header, Content, Footer } = Layout;
-
 const InstanceData = observer(() => {
-
   const store = useStore();
-  const { baseUrl, apiVersion } = useConfig();
+  const {baseUrl} = useConfig();
+  const [visible, setVisible] = useState(false);
+
 
   const imageUrl = `${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`;
   const verifier = `${store.currentInstance.instance} - ${store.currentInstance.sB1IHYu2xQT}`;
 
   return (<div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
     <div style={{display: 'flex', flexDirection: 'column'}}>
-        <img src="moh.png" style={{width: '64px', marginBottom: '10px'}}/>
+      <img src="moh.png" style={{width: '64px', marginBottom: '10px'}}/>
     </div>
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{
@@ -39,7 +38,7 @@ const InstanceData = observer(() => {
         Demographic Information
       </div>
 
-      <div style={{display: 'flex', padding: 20}}>
+      <div style={{display: 'flex', padding: 10}}>
         <div style={{display: 'flex', flexDirection: 'column'}}>
           <div>
             <span>Full Name:</span>
@@ -58,13 +57,13 @@ const InstanceData = observer(() => {
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.g4LJbkM0R24}</span>
           </div>
           <div style={{marginTop: 5}}>
-            <span>National ID (NIN)/Passport No: :</span>
+            <span>National ID (NIN)/Passport No:</span>
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.oUqWGeHjj5C}</span>
           </div>
 
         </div>
-        <div style={{width: 100, height: 150, background: 'yellow', overflow:'hidden', marginLeft: 'auto', float: 'right'}}>
-          <img src={imageUrl} alt="Image" style={{maxWidth: '100%',maxHeight: '100%', display: 'block'}}/>
+        <div style={{width: 120, overflow: 'hidden', marginLeft: 'auto', float: 'right'}}>
+          <img src={imageUrl} alt="Image"/>
         </div>
       </div>
     </div>
@@ -81,8 +80,8 @@ const InstanceData = observer(() => {
         Travel Information
       </div>
 
-      <div style={{display: 'flex', padding: 20}}>
-        <div style={{display: 'flex', flexDirection: 'column', width: '60%'}}>
+      <div style={{display: 'flex', padding: 10}}>
+        <div style={{display: 'flex', flexDirection: 'column', width: '70%'}}>
           <div>
             <span>Point of Entry:</span>
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}></span>
@@ -117,7 +116,7 @@ const InstanceData = observer(() => {
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.E7u9XdW24SP}</span>
           </div>
         </div>
-        <div style={{width: '40%', marginLeft: 'auto', marginRight: 100, display: 'flex', flexDirection: 'column'}}>
+        <div style={{width: '30%', marginLeft: 'auto', display: 'flex', flexDirection: 'column'}}>
           <div>
             <span>Point of Entry ID:</span>
             <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.CLzIR1Ye97b}</span>
@@ -171,7 +170,7 @@ const InstanceData = observer(() => {
         </div>
       </div>
     </div>
-    <div style={{display: 'flex',flexDirection: 'column'}} className="approval">
+    <div style={{display: 'flex', flexDirection: 'column'}} className="approval">
       <style type="text/css">
         {`@media print {.approval { display: none; }}`}
       </style>
@@ -189,10 +188,10 @@ const InstanceData = observer(() => {
       <div style={{display: 'flex', padding: 20}}>
         <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <div style={{display: 'flex',flexDirection: 'column', flexBasis: '100%', flex: 1, width: '50%'}}>
+            <div style={{display: 'flex', flexDirection: 'column', flexBasis: '100%', flex: 1, width: '50%'}}>
               <span>Approved by:</span>
             </div>
-            <div style={{display: 'flex',flexDirection: 'column', flexBasis: '100%', flex: 1}}>
+            <div style={{display: 'flex', flexDirection: 'column', flexBasis: '100%', flex: 1}}>
               <span>Official Stamp: </span>
             </div>
           </div>
@@ -213,12 +212,18 @@ class Instance extends React.Component {
   }
 }
 
-export const TrackedEntityInstance = () => {
+export const TrackedEntityInstance = observer(() => {
   const componentRef = useRef();
   const store = useStore();
+  const history = useHistory();
+
+  useEffect(() => {
+    store.queryOtherInstances();
+  }, [store]);
+
   return (
     <div>
-      <Menu mode="horizontal" theme="light"  defaultSelectedKeys={['print']}>
+      <Menu mode="horizontal" theme="light" defaultSelectedKeys={['print']}>
         <Menu.Item key="print" style={{marginLeft: 20}}>
           <ReactToPrint
             trigger={() => <span>
@@ -227,7 +232,7 @@ export const TrackedEntityInstance = () => {
             content={() => componentRef.current}
           />
         </Menu.Item>
-        <Menu.Item key="group">
+        <Menu.Item key="group" onClick={store.openDialog}>
           <EyeOutlined/>
           Other travelers on {store.currentInstance.h6aZFN4DLcR}
         </Menu.Item>
@@ -241,6 +246,32 @@ export const TrackedEntityInstance = () => {
       </Menu>
 
       <Instance ref={componentRef}/>
+
+
+      <Modal
+        title="Other Travellers"
+        visible={store.visible}
+        onOk={store.closeDialog}
+        onCancel={store.closeDialog}
+        width="70%"
+      >
+        <Table
+          rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' : 'table-row-dark'}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: event => {
+                store.setCurrentRow(record);
+                store.closeDialog();
+                history.push(`/${record[0]}`);
+              },
+            };
+          }}
+          columns={store.columns}
+          dataSource={store.otherInstances.rows}
+          rowKey={(row) => row[0]}
+          pagination={false}
+        />
+      </Modal>
     </div>
   );
-}
+})
