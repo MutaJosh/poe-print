@@ -253,7 +253,7 @@ export const TrackedEntityInstance = observer(() => {
         visible={store.visible}
         onOk={store.closeDialog}
         onCancel={store.closeDialog}
-        width="70%"
+        width="95%"
       >
         <Table
           rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' : 'table-row-dark'}
