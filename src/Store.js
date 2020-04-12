@@ -4,18 +4,19 @@ import {fromPairs, isEmpty, has} from 'lodash';
 
 export class Store {
   engine;
-  trackedEntityInstances = {rows: [], headers: []};
+  trackedEntityInstances = [];
   query = '';
   page = 1;
   total = 0;
   pageSize = 10;
   sorter = 'created:desc';
-  loading = false;
-  currentRow;
-  otherInstances = {rows: [], headers: []};
+  currentInstance = {};
+  currentHeaders = [];
+  otherInstances = [];
   visible = false;
   programId = 'nBWFG3fYC8N'
   options = {};
+
   attributesWithOptionSet = {
     XvETY1aTxuB: 'Countries',
     cW0UPEANS5t: 'Countries',
@@ -60,23 +61,27 @@ export class Store {
   }
 
   queryData = async () => {
-    this.loading = true;
     const {trackedEntityInstances} = await this.engine.query(this.currentQuery);
     const {metaData: {pager}} = trackedEntityInstances;
     this.pageSize = pager.pageSize;
     this.total = pager.total;
     this.page = pager.page;
-    this.trackedEntityInstances = trackedEntityInstances;
-    this.loading = false;
+    this.currentHeaders = trackedEntityInstances.headers;
+    const headers = trackedEntityInstances.headers.map(h => h['name']);
+    this.trackedEntityInstances = trackedEntityInstances.rows.map(r => {
+      return Object.assign.apply({}, headers.map((v, i) => ({
+        [v]: r[i]
+      })));
+    });
   };
 
-  queryOtherInstances = async () => {
-    if (!isEmpty(this.currentInstance) && !isEmpty(this.currentInstance.h6aZFN4DLcR)) {
+  queryOtherInstances = async (vehicleNo) => {
+    if (!isEmpty(vehicleNo)) {
       const params = {
         ouMode: 'ALL',
         program: this.programId,
         skipPaging: 'true',
-        query: this.currentInstance.h6aZFN4DLcR
+        attribute: `h6aZFN4DLcR:EQ:${vehicleNo}`
       };
 
       const q = {
@@ -86,12 +91,39 @@ export class Store {
         }
       }
       const {trackedEntityInstances} = await this.engine.query(q);
-      this.otherInstances = trackedEntityInstances;
+      const headers = trackedEntityInstances.headers.map(h => h['name']);
+      this.otherInstances = trackedEntityInstances.rows.map(r => {
+        return Object.assign.apply({}, headers.map((v, i) => ({
+          [v]: r[i]
+        })));
+      });
     }
-
   }
 
-  setCurrentRow = val => this.currentRow = val;
+  queryOneInstances = async (poe) => {
+    const params = {
+      ouMode: 'ALL',
+      program: this.programId,
+      skipPaging: 'true',
+      attribute: `CLzIR1Ye97b:EQ:${poe}`
+    };
+    const q = {
+      trackedEntityInstances: {
+        resource: 'trackedEntityInstances/query.json',
+        params
+      }
+    }
+    const {trackedEntityInstances} = await this.engine.query(q);
+    if (trackedEntityInstances.rows.length > 0) {
+      const row = trackedEntityInstances.rows[0];
+      this.currentHeaders = trackedEntityInstances.headers;
+      const finalRow = this.currentHeaders.map((col, index) => {
+        return [col.name, row[index]];
+      });
+      this.currentInstance = fromPairs(finalRow);
+      await this.queryOtherInstances(this.currentInstance.h6aZFN4DLcR)
+    }
+  }
 
   onSearch = async (e) => {
     this.page = 1;
@@ -148,7 +180,7 @@ export class Store {
 
   get columns() {
     const attributes = this.availableAttributes.filter(a => a.selected).map(a => a.id);
-    return this.trackedEntityInstances.headers.map((a, i) => {
+    return this.currentHeaders.map((a) => {
       return {
         key: a.name,
         title: a.column,
@@ -156,22 +188,12 @@ export class Store {
         sorter: true,
         render: (text, row) => {
           if (has(this.attributesWithOptionSet, a.name)) {
-            return <div>{this.options[this.attributesWithOptionSet[a.name]][row[i]]}</div>
+            return <div>{this.options[this.attributesWithOptionSet[a.name]][row[a.name]]}</div>
           }
-          return <div>{row[i]}</div>
+          return <div>{row[a.name]}</div>
         }
       }
     }).filter(column => attributes.indexOf(column.key) !== -1);
-  }
-
-  get currentInstance() {
-    if (this.currentRow) {
-      const finalRow = this.trackedEntityInstances.headers.map((col, index) => {
-        return [col.name, this.currentRow[index]];
-      });
-      return fromPairs(finalRow);
-    }
-    return {};
   }
 }
 
@@ -188,6 +210,8 @@ decorate(Store, {
   options: observable,
   attributesWithOptionSet: observable,
   availableAttributes: observable,
+  currentHeaders: observable,
+  currentInstance:observable,
 
   queryData: action,
   handleChange: action,
@@ -199,8 +223,8 @@ decorate(Store, {
   queryOptions: action,
   setAvailableAttributes: action,
   includeColumns: action,
+  queryOneInstances: action,
 
   currentQuery: computed,
-  currentInstance: computed,
-  columns: computed
+  columns: computed,
 });

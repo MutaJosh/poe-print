@@ -28,10 +28,10 @@ export const Home = observer(() => {
 
   return <div style={{padding: 10, background: '#F7F7F7', 'minHeight': '95vh'}}>
     <Card
-        title="Registered and allowed travellers into Uganda - COVID19 Response"
-        extra={<SettingOutlined style={{fontSize: '24px'}} onClick={showDrawer}/>}
-        bodyStyle={{overflow: "auto"}}
-        >
+      title="Registered and allowed travellers into Uganda - COVID19 Response"
+      extra={<SettingOutlined style={{fontSize: '24px'}} onClick={showDrawer}/>}
+      bodyStyle={{overflow: "auto"}}
+    >
       <Search
         size="large"
         placeholder="input search text"
@@ -44,14 +44,13 @@ export const Home = observer(() => {
         onRow={(record, rowIndex) => {
           return {
             onClick: event => {
-              store.setCurrentRow(record);
-              history.push(`/${record[0]}`);
+              history.push(`/${record['CLzIR1Ye97b']}`);
             },
           };
         }}
         columns={store.columns}
-        dataSource={store.trackedEntityInstances.rows}
-        rowKey={(row) => row[0]}
+        dataSource={store.trackedEntityInstances}
+        rowKey="instance"
         size="middle"
         onChange={store.handleChange}
         pagination={{
