@@ -243,15 +243,15 @@ export const TrackedEntityInstance = observer(() => {
             content={() => componentRef.current}
           />
         </Menu.Item>
-        <Menu.Item key="group" onClick={store.openDialog}>
+        <Menu.Item key="group" onClick={store.openDialog} style={{textTransform: "uppercase"}}>
           <EyeOutlined/>
-          Other travelers on {store.currentInstance.h6aZFN4DLcR}
+          TRAVELERS ON {store.currentInstance.h6aZFN4DLcR}
         </Menu.Item>
 
         <Menu.Item key="home">
           <Link to="/">
             <HomeOutlined/>
-            Back to List
+            BACK TO LIST
           </Link>
         </Menu.Item>
       </Menu>
