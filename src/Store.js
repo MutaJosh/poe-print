@@ -14,7 +14,9 @@ export class Store {
   currentHeaders = [];
   otherInstances = [];
   visible = false;
-  programId = 'nBWFG3fYC8N'
+  programId = 'nBWFG3fYC8N';
+  userOrgUnits = [];
+
   options = {};
 
   attributesWithOptionSet = {
@@ -41,6 +43,12 @@ export class Store {
           filter: 'name:in:[Countries]'
         }
       },
+      me: {
+        resource: 'me.json',
+        params: {
+          fields: 'organisationUnits[id]'
+        }
+      },
       program: {
         resource: `programs/${this.programId}`,
         params: {
@@ -48,7 +56,7 @@ export class Store {
         }
       }
     }
-    const {optionSets, program: {programTrackedEntityAttributes}} = await this.engine.query(q);
+    const {optionSets, program: {programTrackedEntityAttributes}, me: {organisationUnits}} = await this.engine.query(q);
     const processedOptionSets = optionSets.optionSets.map(({name, options}) => {
       const optionsMap = fromPairs(options.map(o => [o.code, o.name]));
       return [name, optionsMap]
@@ -58,9 +66,11 @@ export class Store {
     this.availableAttributes = programTrackedEntityAttributes.map(({displayInList: selected, trackedEntityAttribute}) => {
       return {...trackedEntityAttribute, selected};
     });
+    this.userOrgUnits = organisationUnits.map(ou => ou.id).join(';');
   }
 
   queryData = async () => {
+    await this.queryOptions();
     const {trackedEntityInstances} = await this.engine.query(this.currentQuery);
     const {metaData: {pager}} = trackedEntityInstances;
     this.pageSize = pager.pageSize;
@@ -78,7 +88,8 @@ export class Store {
   queryOtherInstances = async (vehicleNo) => {
     if (!isEmpty(vehicleNo)) {
       const params = {
-        ouMode: 'ALL',
+        ouMode: 'DESCENDANTS',
+        ou: this.userOrgUnits,
         program: this.programId,
         skipPaging: 'true',
         attribute: `h6aZFN4DLcR:EQ:${vehicleNo}`
@@ -102,7 +113,8 @@ export class Store {
 
   queryOneInstances = async (poe) => {
     const params = {
-      ouMode: 'ALL',
+      ouMode: 'DESCENDANTS',
+      ou: this.userOrgUnits,
       program: this.programId,
       skipPaging: 'true',
       attribute: `CLzIR1Ye97b:EQ:${poe}`
@@ -162,7 +174,8 @@ export class Store {
     let params = {
       page: this.page,
       totalPages: 'true',
-      ouMode: 'ALL',
+      ouMode: 'DESCENDANTS',
+      ou: this.userOrgUnits,
       program: this.programId,
       pageSize: this.pageSize,
       order: this.sorter
@@ -211,7 +224,8 @@ decorate(Store, {
   attributesWithOptionSet: observable,
   availableAttributes: observable,
   currentHeaders: observable,
-  currentInstance:observable,
+  currentInstance: observable,
+  userOrgUnits: observable,
 
   queryData: action,
   handleChange: action,

@@ -1,6 +1,6 @@
 {
   "name": "Covid19-Pass",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "An app for printing Authorized Travel Pass for Cargo drivers and crew members into a country implmenting National Covid-19 Lockdown",
   "license": "BSD-3-Clause",
   "private": true,
@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.6",
+    "@ckeditor/ckeditor5-build-classic": "^18.0.0",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@dhis2/app-runtime": "^2.1.1",
     "antd": "^4.1.2",
     "lodash": "^4.17.15",

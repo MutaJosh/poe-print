@@ -174,33 +174,13 @@ const InstanceData = observer(() => {
                 <span>Measured temperature:</span>
                 <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.QUrkIanwcHD}</span>
               </div>
-              <div style={{display: 'flex', width: '100%'}}>
-                <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', width: '100%'}}>
-                  <span>Has the specimen been taken?</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.NuRldDwq0AJ}</span>
-                </div>
-                <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', paddingLeft: 20}}>
-                  <span>Specimen Type: </span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.SI7jnNQpEQM}</span>
-                </div>
-                <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', paddingLeft: 20}}>
-                  <span>Type of test: </span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.Bh19lOSuiUC}</span>
-                </div>
+              <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', width: '100%'}}>
+                <span>Has the specimen been taken?</span>
+                <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.NuRldDwq0AJ}</span>
               </div>
-              <div style={{marginTop: 5}}>
-                <span>Isolated:</span>
-                <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.Ep6evsVocKY}</span>
-              </div>
-              <div style={{display: 'flex', width: '100%'}}>
-                <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%'}}>
-                  <span>Referred for further investigation:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.EZwIFcKvSes}</span>
-                </div>
-                <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%',}}>
-                  <span>Is individual under quarantine?</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.oVFYcqtwPY9}</span>
-                </div>
+              <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', width: '100%'}}>
+                <span>Cleared to travel?</span>
+                <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.EWWNozu6TVd}</span>
               </div>
             </div>
           </div>

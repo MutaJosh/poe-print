@@ -11,19 +11,20 @@ import {Home} from "./Home";
 import {Provider} from "./context/context";
 import {Store} from "./Store";
 import './App.css'
+import {Template} from "./Template";
 
 const MyApp = () => {
   const engine = useDataEngine();
   const store = new Store(engine);
-  useEffect(() => {
-    store.queryOptions();
-  }, [store])
   return (
     <Provider value={store}>
       <Router>
         <Switch>
           <Route exact path="/">
             <Home/>
+          </Route>
+          <Route path="/templates/editor">
+            <Template/>
           </Route>
           <Route path="/:instance">
             <TrackedEntityInstance/>
