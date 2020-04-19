@@ -30,7 +30,7 @@ export const Home = observer(() => {
     <Card
       title="Registered and allowed travellers into Uganda - COVID19 Response"
       extra={<SettingOutlined style={{fontSize: '24px'}} onClick={showDrawer}/>}
-      bodyStyle={{overflow: "auto"}}
+      bodyStyle={{overflow: "auto", textTransform: "uppercase"}}
     >
       <Search
         size="large"
@@ -53,6 +53,7 @@ export const Home = observer(() => {
         rowKey="instance"
         size="middle"
         onChange={store.handleChange}
+        style={{textTransform: "uppercase", fontSize: 12}}
         pagination={{
           showSizeChanger: true,
           total: store.total,

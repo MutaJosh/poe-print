@@ -112,6 +112,7 @@ export class Store {
   }
 
   queryOneInstances = async (poe) => {
+    await this.queryOptions();
     const params = {
       ouMode: 'DESCENDANTS',
       ou: this.userOrgUnits,
