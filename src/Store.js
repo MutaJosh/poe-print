@@ -15,9 +15,9 @@ export class Store {
   otherInstances = [];
   visible = false;
   programId = 'nBWFG3fYC8N';
-  userOrgUnits = [];
-
+  programStageID = 'geweXwkKtFQ'; //TODO: Configure
   options = {};
+  userOrgUnits = [];
 
   attributesWithOptionSet = {
     XvETY1aTxuB: 'Countries',
@@ -227,6 +227,7 @@ decorate(Store, {
   currentHeaders: observable,
   currentInstance: observable,
   userOrgUnits: observable,
+  programStageID: observable,
 
   queryData: action,
   handleChange: action,
