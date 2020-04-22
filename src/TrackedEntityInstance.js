@@ -21,14 +21,14 @@ const InstanceData = observer(() => {
   const appCrypt = new SimpleCrypto(AESKey);
   const program = store.programId;
   const programStage = store.programStageID;
+  const url = window.location.href;
+  const qr_dhis2_url = url.split("/api/")[0];
 
 
   useEffect(() => {
     store.queryOneInstances(params.instance).then(() => {
       setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-      setVerifier(appCrypt.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle : ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${baseUrl} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou}`));
-      // setFinalVerifier(appCrypt.encrypt(verifier.toUpperCase() + `DHIS2: ${baseUrl}\nTEI: ${store.currentInstance.instance}`));
-      // setFinalVerifier(appCrypt.encrypt("STEPHEN OCAYA"));
+      setVerifier(appCrypt.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou}`));
     })
   }, [store, params])
 

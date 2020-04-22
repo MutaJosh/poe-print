@@ -15,7 +15,8 @@ export class Store {
   otherInstances = [];
   visible = false;
   programId = 'nBWFG3fYC8N';
-  programStageID = 'geweXwkKtFQ'; //TODO: Configure
+  // programStageID = 'geweXwkKtFQ'; //ugandaeidsr.org
+  programStageID = 'r7k02JBxge6'; //eidsr.health.go.ug
   options = {};
   userOrgUnits = [];
 
