@@ -4,7 +4,7 @@ import {Link, useHistory, useParams} from 'react-router-dom'
 import {Menu, Modal, Table} from "antd";
 import QrCode from 'qrcode.react';
 import {useConfig} from '@dhis2/app-runtime';
-import {PrinterOutlined, EyeOutlined, HomeOutlined} from '@ant-design/icons';
+import {PrinterOutlined, EyeOutlined, HomeOutlined, FormOutlined} from '@ant-design/icons';
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 import {isEmpty} from "lodash";
@@ -60,7 +60,6 @@ const InstanceData = observer(() => {
             }}>
               Demographic Information
             </div>
-
             <div style={{display: 'flex', padding: 10}}>
               <div style={{display: 'flex', flexDirection: 'column'}}>
                 <div>
@@ -274,10 +273,18 @@ export const TrackedEntityInstance = observer(() => {
                 content={() => componentRef.current}
             />
           </Menu.Item>
-          <Menu.Item key="group" onClick={store.openDialog} style={{textTransform: "uppercase"}}>
-            <EyeOutlined/>
-            TRAVELERS ON {store.currentInstance.h6aZFN4DLcR}
-          </Menu.Item>
+            <Menu.Item key="print" style={{marginLeft: 20}}>
+                <ReactToPrint
+                    trigger={() => <span>
+                 <PrinterOutlined/> PRINT PASS
+                </span>}
+                    content={() => componentRef.current}
+                />
+            </Menu.Item>
+            <Menu.Item key="group" onClick={store.openDialog} style={{textTransform: "uppercase"}}>
+                <EyeOutlined/>
+                TRAVELERS ON {store.currentInstance.h6aZFN4DLcR}
+            </Menu.Item>
 
           <Menu.Item key="home">
             <Link to="/">
