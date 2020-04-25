@@ -1,6 +1,6 @@
 import {decorate, observable, action, computed} from "mobx";
 import React from "react";
-import {fromPairs, isEmpty, has} from 'lodash';
+import {fromPairs, isEmpty, has, flatten} from 'lodash';
 
 export class Store {
   engine;
@@ -14,19 +14,17 @@ export class Store {
   currentHeaders = [];
   otherInstances = [];
   visible = false;
-  programId = 'nBWFG3fYC8N';
+  // programId = 'nBWFG3fYC8N'; //UG
+  programId = 'uYjxkTbwRNf'; //RW
   // programStageID = 'geweXwkKtFQ'; //ugandaeidsr.org
-  programStageID = 'r7k02JBxge6'; //eidsr.health.go.ug
+  // programStageID = 'r7k02JBxge6'; //eidsr.health.go.ug
+  programStageID = 'LpWNjNGvCO5'; //RW
   options = {};
   userOrgUnits = [];
 
   attributesWithOptionSet = {
-    XvETY1aTxuB: 'Countries',
-    cW0UPEANS5t: 'Countries',
-    pxcXhmjJeMv: 'Countries',
-    wJpIzoGlb9j: 'Countries',
-    zhWTXIwd6U1: 'Countries',
-    x9YWFwwuQnG: 'Countries'
+    egZSEmMeCeB: 'Countries',
+    hBcoBCZBWFb: 'Countries'
   }
   availableAttributes = [];
 
@@ -112,29 +110,41 @@ export class Store {
     }
   }
 
-  queryOneInstances = async (poe) => {
+  queryOneInstances = async (instance) => {
+    console.log(instance);
     await this.queryOptions();
     const params = {
-      ouMode: 'DESCENDANTS',
-      ou: this.userOrgUnits,
       program: this.programId,
-      skipPaging: 'true',
-      attribute: `CLzIR1Ye97b:EQ:${poe}`
+      fields: '*'
     };
     const q = {
       trackedEntityInstances: {
-        resource: 'trackedEntityInstances/query.json',
+        resource: `trackedEntityInstances/${instance}.json`,
         params
       }
-    }
+    };
+
     const {trackedEntityInstances} = await this.engine.query(q);
-    if (trackedEntityInstances.rows.length > 0) {
-      const row = trackedEntityInstances.rows[0];
-      this.currentHeaders = trackedEntityInstances.headers;
-      const finalRow = this.currentHeaders.map((col, index) => {
-        return [col.name, row[index]];
+    console.log(trackedEntityInstances);
+    if (trackedEntityInstances !== undefined) {
+      console.log("DATA FOUND");
+      const events = trackedEntityInstances.enrollments.filter(p => p.program === this.programId ).map(({events,...enrollmentDetails})=>{
+        const evs = events.map(({dataValues,programStage,...others})=>{
+          // return {...fromPairs(dataValues.map(dv=>[dv.dataElement,dv.value])),...others,...enrollmentDetails}
+          return {...fromPairs(dataValues.map(dv=>[programStage,{[dv.dataElement]:dv.value}])),...others,...enrollmentDetails}
+        });
+        return evs
       });
-      this.currentInstance = fromPairs(finalRow);
+      const finalEvents = flatten(events);
+
+      const attributes = trackedEntityInstances.attributes;
+      const attributeRow = attributes.map(att=>{
+        return [att.attribute, att.value];
+      });
+
+      this.currentInstance = fromPairs(attributeRow);
+      this.currentInstance = {...this.currentInstance, events:events, instance: instance}
+      console.log(this.currentInstance);
       await this.queryOtherInstances(this.currentInstance.h6aZFN4DLcR)
     }
   }

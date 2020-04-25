@@ -1,5 +1,5 @@
 {
-  "name": "Covid19-Pass",
+  "name": "Covid19-Results",
   "version": "1.0.8",
   "description": "An app for printing Authorized Travel Pass for Cargo drivers and crew members into a country implmenting National Covid-19 Lockdown",
   "license": "BSD-3-Clause",
@@ -12,7 +12,7 @@
   "author": {
     "name": "HISP Uganda",
     "email": "info@hispuganda.org",
-    "url": "http://hispuganda.org/covid-19-pass"
+    "url": "http://hispuganda.org/covid-19-results"
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^4.0.0"
@@ -30,7 +30,6 @@
     "mobx-react": "^6.2.2",
     "qrcode.react": "^1.0.0",
     "react-router-dom": "^5.1.2",
-    "react-to-print": "^2.6.3",
-    "simple-crypto-js": "^2.2.0"
+    "react-to-print": "^2.6.3"
   }
 }

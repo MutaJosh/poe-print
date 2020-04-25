@@ -8,7 +8,8 @@ import {PrinterOutlined, EyeOutlined, HomeOutlined, FormOutlined} from '@ant-des
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 import {isEmpty} from "lodash";
-import SimpleCrypto from "simple-crypto-js";
+// import SimpleCrypto from "simple-crypto-js";
+import AES from 'crypto-js/aes';
 
 const InstanceData = observer(() => {
   const store = useStore();
@@ -18,7 +19,7 @@ const InstanceData = observer(() => {
   const {baseUrl} = useConfig();
   const params = useParams();
   const AESKey = "COVID-19R35P0N5E-2020";
-  const appCrypt = new SimpleCrypto(AESKey);
+  // const appCrypt = new SimpleCrypto(AESKey);
   const program = store.programId;
   const programStage = store.programStageID;
   const url = window.location.href;
@@ -28,29 +29,32 @@ const InstanceData = observer(() => {
   useEffect(() => {
     store.queryOneInstances(params.instance).then(() => {
       setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-      setVerifier(appCrypt.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou}`));
+      setVerifier(AES.encrypt(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`, AESKey));
+      // setVerifier(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`);
     })
   }, [store, params])
 
+  console.log(verifier.toString());
 
   return (<div>
     {!isEmpty(store.currentInstance) ?
         <div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
+          <div style={{display: 'flex', flexDirection: 'column',alignItems: 'center'}}>
             <div style={{display: 'flex', flexDirection: 'row', marginTop: '2px'}}>
               <div style={{display: 'flex', flexDirection: 'column', flexBasis: '5%'}}>
-                <img src="moh.png" style={{width: '64px', marginBottom: '5px'}}/>
+                <img src="rwanda.png" style={{width: '64px', marginBottom: '5px', marginTop: 5}}/>
               </div>
-              <div style={{display: 'flex', flexDirection: 'column', flexBasis: '100%', marginLeft: '20px'}}>
-                <h3 style={{marginTop: '5px'}}>MOH Disease Surveillance Department</h3>
-                <span style={{color: 'green', fontWeight: 'bold', marginTop: '-9px'}}>COVID-19 TravelPASS</span>
+              <div style={{display: 'flex', flexDirection: 'column', flexBasis: '100%', marginLeft: '10px'}}>
+                <h3 style={{marginTop: '5px', textTransform: 'uppercase', marginLeft: 20}}>Republic of Rwanda</h3>
+                <span style={{fontWeight: 'bold', marginTop: '-18px',  textTransform: 'uppercase', fontSize: '1.5em'}}>Ministry of Health</span>
               </div>
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{
               width: '100%',
-              background: '#d8dce0',
+              background: '#c6d3dc',
+                color: '#FFFFFF',
               height: 32,
               display: 'flex',
               alignItems: 'center',
@@ -58,107 +62,76 @@ const InstanceData = observer(() => {
               paddingLeft: 20,
               marginTop: 20
             }}>
-              Demographic Information
+              Vital Case Information
             </div>
             <div style={{display: 'flex', padding: 10}}>
               <div style={{display: 'flex', flexDirection: 'column'}}>
                 <div>
+                  <span>Case Unique ID:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.he05i8FUwu3}</span>
+                </div>
+                <div style={{marginTop: 5}}>
                   <span>Full Name:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.sB1IHYu2xQT}</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.sB1IHYu2xQT + " " + store.currentInstance.ENRjVGxVL6l} </span>
+                </div>
+                <div style={{marginTop: 5}}>
+                  <span>Sex:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
+                      {store.currentInstance.oindugucx72}
+                  </span>
+                </div>
+                <div style={{marginTop: 5}}>
+                  <span>Date of Birth:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.NI0QRzJvQ0k}</span>
                 </div>
                 <div style={{marginTop: 5}}>
                   <span>Nationality:</span>
                   <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
-                  {store.options['Countries'][store.currentInstance.XvETY1aTxuB]}
-                </span>
+                      {store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}
+                  </span>
                 </div>
-                <div style={{marginTop: 5}}>
-                  <span>Sex:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.FZzQbW8AWVd}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Date of Birth (Age):</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.g4LJbkM0R24}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>National ID (NIN)/Passport No:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.oUqWGeHjj5C}</span>
-                </div>
+              </div>
+              <div style={{width: 120, overflow: 'hidden', marginLeft: 'auto', marginRight: 60, float: 'right'}}>
+                  <QrCode value={'JUST A TEST'} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
+              </div>
 
-              </div>
-              <div style={{width: 120, overflow: 'hidden', marginLeft: 'auto', float: 'right'}}>
-                <img src={imageUrl} alt="Image"/>
-              </div>
+                {/*<div style={{marginTop: 20}}>*/}
+                {/*    <QrCode value={verifier} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>*/}
+                {/*</div>*/}
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{
               width: '100%',
-              background: '#d8dce0',
+                background: '#c6d3dc',
+                color: '#FFFFFF',
               height: 32,
               display: 'flex',
               alignItems: 'center',
               alignContent: 'center',
               paddingLeft: 20
             }}>
-              Travel Information
-            </div>
+              Address and Contact Information
 
+            </div>
             <div style={{display: 'flex', padding: 10}}>
               <div style={{display: 'flex', flexDirection: 'column', width: '70%'}}>
-                <div>
-                  <span>Point of Entry:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.ouname}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Country of Departure:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
-                 {store.options['Countries'][store.currentInstance.cW0UPEANS5t]}
-                </span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Country of Transit:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder',textTransform: "uppercase"}}>
-                  {store.options['Countries'][store.currentInstance.pxcXhmjJeMv]}
-                </span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Vehicle registration number:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.h6aZFN4DLcR}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Date and Time of entry:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.UJiu0P8GvHt}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Planned duration of stay (in Days) while in Uganda:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.eH7YTWgoHgo}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Physical address while in Uganda (Hotel/village/town/district):</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.ooK7aSiAaGq}</span>
-                </div>
-                <div style={{marginTop: 5}}>
-                  <span>Phone Contact or Next of Kin contact:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.E7u9XdW24SP}</span>
-                </div>
-              </div>
-              <div style={{width: '30%', marginLeft: 'auto', display: 'flex', flexDirection: 'column'}}>
-                <div>
-                  <span>Point of Entry ID:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.CLzIR1Ye97b}</span>
-                </div>
 
-                <div style={{border: 'solid black 1px', paddingLeft: 10}}>
-                  <span>Countries visited in the last 14 days:</span>
-                  <div style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
-                    <p style={{padding: 0, margin: 0}}>{store.options['Countries'][store.currentInstance.wJpIzoGlb9j]}</p>
-                    <p style={{padding: 0, margin: 0}}>{store.options['Countries'][store.currentInstance.zhWTXIwd6U1]}</p>
-                    <p style={{padding: 0, margin: 0}}>{store.options['Countries'][store.currentInstance.x9YWFwwuQnG]}</p>
-                  </div>
+                <div>
+                  <span>Telephone (local):</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.fctSQp5nAYl}</span>
                 </div>
-                <div style={{marginTop: 20}}>
-                  <QrCode value={verifier} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
+                <div style={{marginTop: 5}}>
+                  <span>Email Address:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>
+                 {store.options['Countries'][store.currentInstance.YVZnRB53ymX]}
+                </span>
+                </div>
+                <div style={{marginTop: 5}}>
+                  <span>Country of Residence:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder',textTransform: "uppercase"}}>
+                  {store.options['Countries'][store.currentInstance.egZSEmMeCeB]}
+                </span>
                 </div>
               </div>
             </div>
@@ -167,29 +140,34 @@ const InstanceData = observer(() => {
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{
               width: '100%',
-              background: '#d8dce0',
+                background: '#c6d3dc',
+                color: '#FFFFFF',
               height: 32,
               display: 'flex',
               alignItems: 'center',
               alignContent: 'center',
               paddingLeft: 20
             }}>
-              COVID-19 Surveillance Investigations
+              COVID-19 Investigation and Tests
             </div>
             <div style={{display: 'flex', padding: 10}}>
               <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                 <div>
-                  <span>Measured temperature:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.QUrkIanwcHD}</span>
+                  <span>Date Specimen Collected:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.Q98LhagGLFj}</span>
                 </div>
                 <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', width: '100%'}}>
-                  <span>Has the specimen been taken?</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.NuRldDwq0AJ}</span>
+                  <span>Date Specimen recieved: </span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.kBNDcbtH4ii}</span>
                 </div>
                 <div style={{marginTop: 5}}>
-                  <span>Cleared to Travel:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.EWWNozu6TVd}</span>
+                  <span>Test Result:</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.ovY6E8BSdto}</span>
                 </div>
+                  <div style={{marginTop: 5}}>
+                      <span>Has the case traveled in the 14 days prior to symptoms onset? </span>
+                      <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.TzqawmlPkI5}</span>
+                  </div>
               </div>
             </div>
           </div>
@@ -199,14 +177,15 @@ const InstanceData = observer(() => {
             </style>
             <div style={{
               width: '100%',
-              background: '#d8dce0',
+                background: '#c6d3dc',
+                color: '#FFFFFF',
               height: 32,
               display: 'flex',
               alignItems: 'center',
               alignContent: 'center',
               paddingLeft: 20
             }}>
-              Approval
+              OFFICIAL USE ONLY
             </div>
             <div style={{display: 'flex', padding: 20}}>
               <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
@@ -261,6 +240,8 @@ class Instance extends React.Component {
 export const TrackedEntityInstance = observer(() => {
   const componentRef = useRef();
   const store = useStore();
+
+  console.log(store);
   const history = useHistory();
   return (
       <div>
@@ -268,24 +249,11 @@ export const TrackedEntityInstance = observer(() => {
           <Menu.Item key="print" style={{marginLeft: 20}}>
             <ReactToPrint
                 trigger={() => <span>
-                 <PrinterOutlined/> PRINT PASS
+                 <PrinterOutlined/> PRINT RESULTS
                 </span>}
                 content={() => componentRef.current}
             />
           </Menu.Item>
-            <Menu.Item key="print" style={{marginLeft: 20}}>
-                <ReactToPrint
-                    trigger={() => <span>
-                 <PrinterOutlined/> PRINT PASS
-                </span>}
-                    content={() => componentRef.current}
-                />
-            </Menu.Item>
-            <Menu.Item key="group" onClick={store.openDialog} style={{textTransform: "uppercase"}}>
-                <EyeOutlined/>
-                TRAVELERS ON {store.currentInstance.h6aZFN4DLcR}
-            </Menu.Item>
-
           <Menu.Item key="home">
             <Link to="/">
               <HomeOutlined/>

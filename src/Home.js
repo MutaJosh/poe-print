@@ -44,7 +44,7 @@ export const Home = observer(() => {
         onRow={(record, rowIndex) => {
           return {
             onClick: event => {
-              history.push(`/${record['CLzIR1Ye97b']}`);
+              history.push(`/${record['instance']}`);
             },
           };
         }}
