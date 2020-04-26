@@ -92,7 +92,7 @@ const InstanceData = observer(() => {
                 </div>
               </div>
               <div style={{width: 120, overflow: 'hidden', marginLeft: 'auto', marginRight: 60, float: 'right'}}>
-                  <QrCode value={'JUST A TEST'} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
+                  <QrCode value={verifier.toString()} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
               </div>
 
                 {/*<div style={{marginTop: 20}}>*/}
