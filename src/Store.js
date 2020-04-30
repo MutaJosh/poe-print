@@ -1,6 +1,6 @@
 import {decorate, observable, action, computed} from "mobx";
 import React from "react";
-import {fromPairs, isEmpty, has, flatten} from 'lodash';
+import {fromPairs, isEmpty, has, flatten, last, groupBy, keys} from 'lodash';
 
 export class Store {
   engine;
@@ -111,7 +111,7 @@ export class Store {
   }
 
   queryOneInstances = async (instance) => {
-    console.log(instance);
+    // console.log(instance);
     await this.queryOptions();
     const params = {
       program: this.programId,
@@ -124,29 +124,37 @@ export class Store {
       }
     };
 
+    let processedData = {};
+
     const {trackedEntityInstances} = await this.engine.query(q);
-    console.log(trackedEntityInstances);
-    if (trackedEntityInstances !== undefined) {
-      console.log("DATA FOUND");
-      const events = trackedEntityInstances.enrollments.filter(p => p.program === this.programId ).map(({events,...enrollmentDetails})=>{
-        const evs = events.map(({dataValues,programStage,...others})=>{
-          // return {...fromPairs(dataValues.map(dv=>[dv.dataElement,dv.value])),...others,...enrollmentDetails}
-          return {...fromPairs(dataValues.map(dv=>[programStage,{[dv.dataElement]:dv.value}])),...others,...enrollmentDetails}
-        });
-        return evs
-      });
-      const finalEvents = flatten(events);
+    // console.log(trackedEntityInstances);
 
-      const attributes = trackedEntityInstances.attributes;
-      const attributeRow = attributes.map(att=>{
-        return [att.attribute, att.value];
-      });
 
-      this.currentInstance = fromPairs(attributeRow);
-      this.currentInstance = {...this.currentInstance, events:events, instance: instance}
-      console.log(this.currentInstance);
-      await this.queryOtherInstances(this.currentInstance.h6aZFN4DLcR)
+    const {attributes, enrollments, ...trackedEntityInstance} = trackedEntityInstances;
+    const allAttributes = fromPairs(attributes.map(dv => {
+      return [dv.attribute, dv.value]
+    }));
+    processedData = {...trackedEntityInstance, ...processedData, ...allAttributes}
+    const enrollment = enrollments.find(e => e.program === this.programId);
+    // console.log(enrollment);
+    if (enrollment) {
+      const {events, relationships, attributes, ...others} = enrollment;
+      // console.log(events);
+      const evs = groupBy(events, 'programStage');
+      console.log(evs);
+      const processedEvents = keys(evs).map(k => {
+        const {dataValues, ...event} = last(evs[k]);
+        // console.log(dataValues);
+        const dvs = fromPairs(dataValues.map(dv => {
+          return [dv.dataElement, dv.value]
+        }));
+        return [k, {...dvs, ...event}]
+      });
+      const allEvents = fromPairs(processedEvents);
+      processedData = {...processedData, ...allEvents, ...others};
     }
+
+    this.currentInstance = processedData;
   }
 
   onSearch = async (e) => {

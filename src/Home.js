@@ -28,7 +28,7 @@ export const Home = observer(() => {
 
   return <div style={{padding: 10, background: '#F7F7F7', 'minHeight': '95vh'}}>
     <Card
-      title="Ministry of Health, Rwanda COVID-19 Responses - Test Results"
+      title="Rwanda COVID-19 Results reports, Ministry of Health Rwanda"
       extra={<SettingOutlined style={{fontSize: '24px'}} onClick={showDrawer}/>}
       bodyStyle={{overflow: "auto", textTransform: "uppercase"}}
     >

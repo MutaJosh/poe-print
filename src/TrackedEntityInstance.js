@@ -8,33 +8,34 @@ import {PrinterOutlined, EyeOutlined, HomeOutlined, FormOutlined} from '@ant-des
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 import {isEmpty} from "lodash";
-// import SimpleCrypto from "simple-crypto-js";
 import AES from 'crypto-js/aes';
+import Utf8 from 'crypto-js/enc-utf8';
 
 const InstanceData = observer(() => {
-  const store = useStore();
-  const [imageUrl, setImageUrl] = useState('');
-  const [verifier, setVerifier] = useState('');
-  // const [finalVerifier, setFinalVerifier] = useState('');
-  const {baseUrl} = useConfig();
-  const params = useParams();
-  const AESKey = "COVID-19R35P0N5E-2020";
-  // const appCrypt = new SimpleCrypto(AESKey);
-  const program = store.programId;
-  const programStage = store.programStageID;
-  const url = window.location.href;
-  const qr_dhis2_url = url.split("/api/")[0];
+    const store = useStore();
+    const [imageUrl, setImageUrl] = useState('');
+    const [verifier, setVerifier] = useState('');
+    // const [finalVerifier, setFinalVerifier] = useState('');
+    const {baseUrl} = useConfig();
+    const params = useParams();
+    const AESKey = "COVID-19R35P0N5E-2020";
+    // const appCrypt = new SimpleCrypto(AESKey);
+    const program = store.programId;
+    const programStage = store.programStageID;
+    const url = window.location.href;
+    const qr_dhis2_url = url.split("/api/")[0];
 
 
-  useEffect(() => {
-    store.queryOneInstances(params.instance).then(() => {
-      setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-      setVerifier(AES.encrypt(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`, AESKey));
-      // setVerifier(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`);
-    })
-  }, [store, params])
+    useEffect(() => {
+        store.queryOneInstances(params.instance).then(() => {
+            setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
+            setVerifier(AES.encrypt(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`, AESKey).toString());
+        })
+    }, [store, params])
 
-  console.log(verifier.toString());
+
+    // console.log(textstring);
+    // console.log(JSON.stringify(store.currentInstance, null, 2));
 
   return (<div>
     {!isEmpty(store.currentInstance) ?
@@ -51,6 +52,7 @@ const InstanceData = observer(() => {
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
+
             <div style={{
               width: '100%',
               background: '#c6d3dc',
@@ -65,6 +67,7 @@ const InstanceData = observer(() => {
               Vital Case Information
             </div>
             <div style={{display: 'flex', padding: 10}}>
+
               <div style={{display: 'flex', flexDirection: 'column'}}>
                 <div>
                   <span>Case Unique ID:</span>
@@ -91,9 +94,9 @@ const InstanceData = observer(() => {
                   </span>
                 </div>
               </div>
-              <div style={{width: 120, overflow: 'hidden', marginLeft: 'auto', marginRight: 60, float: 'right'}}>
-                  <QrCode value={verifier.toString()} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>
-              </div>
+                <div style={{marginLeft: "auto", marginRight: 30}}>
+                    <QrCode value={verifier} style={{marginBottom: 30, marginTop: 30, width: 128, height: 128}} renderAs="svg"/>
+                </div>
 
                 {/*<div style={{marginTop: 20}}>*/}
                 {/*    <QrCode value={verifier} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>*/}
@@ -154,19 +157,19 @@ const InstanceData = observer(() => {
               <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                 <div>
                   <span>Date Specimen Collected:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.Q98LhagGLFj}</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.iR8O4hSLHnu?store.currentInstance.iR8O4hSLHnu.Q98LhagGLFj:""}</span>
                 </div>
                 <div style={{marginTop: 5, display: 'flex', flexDirection: 'row', flexBasis: '100%', width: '100%'}}>
                   <span>Date Specimen recieved: </span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.kBNDcbtH4ii}</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.LYZbB262AbI?store.currentInstance.LYZbB262AbI.kBNDcbtH4ii: ""}</span>
                 </div>
                 <div style={{marginTop: 5}}>
                   <span>Test Result:</span>
-                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.ovY6E8BSdto}</span>
+                  <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.dDHkBd3X8Ce?store.currentInstance.dDHkBd3X8Ce.ovY6E8BSdto: ""}</span>
                 </div>
                   <div style={{marginTop: 5}}>
                       <span>Has the case traveled in the 14 days prior to symptoms onset? </span>
-                      <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.TzqawmlPkI5}</span>
+                      <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>{store.currentInstance.LpWNjNGvCO5?store.currentInstance.LpWNjNGvCO5.TzqawmlPkI5:""}</span>
                   </div>
               </div>
             </div>
@@ -241,7 +244,7 @@ export const TrackedEntityInstance = observer(() => {
   const componentRef = useRef();
   const store = useStore();
 
-  console.log(store);
+  // console.log(store);
   const history = useHistory();
   return (
       <div>
