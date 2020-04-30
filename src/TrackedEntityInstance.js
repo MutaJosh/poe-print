@@ -9,6 +9,7 @@ import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 import {isEmpty} from "lodash";
 import SimpleCrypto from "simple-crypto-js";
+import AES from 'crypto-js/aes';
 
 const InstanceData = observer(() => {
   const store = useStore();
@@ -28,11 +29,11 @@ const InstanceData = observer(() => {
   useEffect(() => {
     store.queryOneInstances(params.instance).then(() => {
       setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-      setVerifier(appCrypt.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou}`));
+      setVerifier(AES.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou}`, AESKey).toString());
     })
   }, [store, params])
 
-
+console.log(verifier);
   return (<div>
     {!isEmpty(store.currentInstance) ?
         <div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
@@ -273,14 +274,6 @@ export const TrackedEntityInstance = observer(() => {
                 content={() => componentRef.current}
             />
           </Menu.Item>
-            <Menu.Item key="print" style={{marginLeft: 20}}>
-                <ReactToPrint
-                    trigger={() => <span>
-                 <PrinterOutlined/> PRINT PASS
-                </span>}
-                    content={() => componentRef.current}
-                />
-            </Menu.Item>
             <Menu.Item key="group" onClick={store.openDialog} style={{textTransform: "uppercase"}}>
                 <EyeOutlined/>
                 TRAVELERS ON {store.currentInstance.h6aZFN4DLcR}
