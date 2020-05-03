@@ -36,6 +36,7 @@ const InstanceData = observer(() => {
 
     // console.log(textstring);
     // console.log(JSON.stringify(store.currentInstance, null, 2));
+    console.log(store.currentInstance);
 
   return (<div>
     {!isEmpty(store.currentInstance) ?
@@ -69,6 +70,10 @@ const InstanceData = observer(() => {
             <div style={{display: 'flex', padding: 10}}>
 
               <div style={{display: 'flex', flexDirection: 'column'}}>
+                  <div>
+                      <span>Covid Facility:</span>
+                      <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.orgUnitName}</span>
+                  </div>
                 <div>
                   <span>Case Unique ID:</span>
                   <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>{store.currentInstance.he05i8FUwu3}</span>
