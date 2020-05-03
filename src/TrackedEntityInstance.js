@@ -8,7 +8,6 @@ import {PrinterOutlined, EyeOutlined, HomeOutlined, FormOutlined} from '@ant-des
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 import {isEmpty} from "lodash";
-import SimpleCrypto from "simple-crypto-js";
 import AES from 'crypto-js/aes';
 
 const InstanceData = observer(() => {
@@ -19,7 +18,7 @@ const InstanceData = observer(() => {
   const {baseUrl} = useConfig();
   const params = useParams();
   const AESKey = "COVID-19R35P0N5E-2020";
-  const appCrypt = new SimpleCrypto(AESKey);
+  // const appCrypt = new SimpleCrypto(AESKey);
   const program = store.programId;
   const programStage = store.programStageID;
   const url = window.location.href;
