@@ -28,7 +28,7 @@ const InstanceData = observer(() => {
   useEffect(() => {
     store.queryOneInstances(params.instance).then(() => {
       setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-      setVerifier(AES.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou}`, AESKey).toString());
+      setVerifier(AES.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou} \nNationality: ${store.currentInstance.XvETY1aTxuB} \nDOB: ${store.currentInstance.g4LJbkM0R24} \nSex: ${store.currentInstance.FZzQbW8AWVd} \nIdentification: ${store.currentInstance.oUqWGeHjj5C}`, AESKey).toString());
     })
   }, [store, params])
 

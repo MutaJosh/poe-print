@@ -61,12 +61,15 @@ export class Store {
     const processedOptionSets = optionSets.optionSets.map(({name, options}) => {
       const optionsMap = fromPairs(options.map(o => [o.code, o.name]));
       return [name, optionsMap]
-    });
+    }) ;
     this.options = fromPairs(processedOptionSets);
 
     this.availableAttributes = programTrackedEntityAttributes.map(({displayInList: selected, trackedEntityAttribute}) => {
       return {...trackedEntityAttribute, selected};
     });
+
+    this.availableAttributes = [...this.availableAttributes, {id:'ouname',name:'ouname',selected: true}]
+
     this.userOrgUnits = organisationUnits.map(ou => ou.id).join(';');
   }
 
