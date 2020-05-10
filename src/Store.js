@@ -15,7 +15,8 @@ export class Store {
   otherInstances = [];
   visible = false;
   programId = 'nBWFG3fYC8N';
-  programStageID = 'geweXwkKtFQ'; //TODO: Configure
+  // programStageID = 'geweXwkKtFQ'; //ugandaeidsr.org
+  programStageID = 'r7k02JBxge6'; //eidsr.health.go.ug
   options = {};
   userOrgUnits = [];
 
@@ -60,12 +61,15 @@ export class Store {
     const processedOptionSets = optionSets.optionSets.map(({name, options}) => {
       const optionsMap = fromPairs(options.map(o => [o.code, o.name]));
       return [name, optionsMap]
-    });
+    }) ;
     this.options = fromPairs(processedOptionSets);
 
     this.availableAttributes = programTrackedEntityAttributes.map(({displayInList: selected, trackedEntityAttribute}) => {
       return {...trackedEntityAttribute, selected};
     });
+
+    this.availableAttributes = [...this.availableAttributes, {id:'ouname',name:'ouname',selected: true}]
+
     this.userOrgUnits = organisationUnits.map(ou => ou.id).join(';');
   }
 
