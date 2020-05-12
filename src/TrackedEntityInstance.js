@@ -34,12 +34,12 @@ const InstanceData = observer(() => {
 
 	return (<div>
 		{!isEmpty(store.currentInstance) ?
-			<div style={{ paddingLeft: 20, paddingRight: 20 }}>
+			<div style={{ paddingLeft: 60, paddingRight: 5, marginBottom: 10 }}>
 				<table width="100%">
 					<tbody>
 						<tr>
 							<td width="32%">
-								<h3>MOH Disease Surveillance Department</h3>
+								<h2>MOH Disease Surveillance Department</h2>
 							</td>
 							<td width="34%" align="center">
 								<img src="moh.png" style={{ width: '128px', marginBottom: '5px' }} />
@@ -163,7 +163,7 @@ const InstanceData = observer(() => {
 								<span style={{ paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase" }}>{store.currentInstance.ouname}</span>
 							</p>
 						</td>
-						<td width="31%" vAlign="middle" className="s2" rowSpan={7}>
+						<td width="31%" vAlign="middle" className="s2" rowSpan={6}>
 							<QrCode value={verifier} style={{ width: 196, height: 196, marginTop: 5, marginBottom: 5 }} renderAs="svg" />
 						</td>
 					</tr>
@@ -221,14 +221,14 @@ const InstanceData = observer(() => {
 							</p>
 						</td>
 					</tr>
-					<tr>
+					{/* <tr>
 						<td width="36%" vAlign="middle" className="s1">
 							<p className="MsoNormal">Hotel/Village/Town/district</p>
 						</td>
 						<td width="31%" vAlign="middle" className="s2">
 							<p className="MsoNormal">&nbsp;</p>
 						</td>
-					</tr>
+					</tr> */}
 					<tr>
 						<td width="100%" colSpan={3} vAlign="middle" className="s4">
 							<p className="MsoListParagraph"><b>C.<span
