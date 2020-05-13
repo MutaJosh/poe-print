@@ -34,7 +34,7 @@ const InstanceData = observer(() => {
 
 	return (<div>
 		{!isEmpty(store.currentInstance) ?
-			<div style={{ paddingLeft: 60, paddingRight: 5, marginBottom: 10 }}>
+			<div style={{ paddingLeft: 60, paddingRight: 60, marginBottom: 10 }}>
 				<table width="100%">
 					<tbody>
 						<tr>
@@ -42,7 +42,7 @@ const InstanceData = observer(() => {
 								<h2>MOH Disease Surveillance Department</h2>
 							</td>
 							<td width="34%" align="center">
-								<img src="moh.png" style={{ width: '128px', marginBottom: '5px' }} />
+								<img src="moh.png" style={{ width: '120px', marginBottom: '5px', marginTop: '8px' }} />
 							</td>
 							<td width="32%"></td>
 						</tr>
@@ -87,7 +87,7 @@ const InstanceData = observer(() => {
 							</p>
 						</td>
 						<td width="31%" rowSpan={7} vAlign="middle" className="s3">
-							<div style={{ width: 196, overflow: 'hidden', }}>
+							<div style={{ height: 254, overflow: 'hidden', }}>
 								<img src={imageUrl} alt="Image" />
 							</div>
 						</td>
@@ -286,6 +286,11 @@ const InstanceData = observer(() => {
 								<p>Malaba POE Incharge </p>
 								<p>Okula Chodrey</p>
 								<p>0774 696637</p>
+							</p>
+							<p className="MsoNormal">
+								<p>Busia POE Incharge</p>
+								<p>Mr. Wabwire Tonny Fredrick</p>
+								<p>0772 883898/0756 883898</p>
 							</p>
 						</td>
 					</tr>
