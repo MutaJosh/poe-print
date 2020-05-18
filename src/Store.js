@@ -1,6 +1,6 @@
-import {decorate, observable, action, computed} from "mobx";
+import { decorate, observable, action, computed } from "mobx";
 import React from "react";
-import {fromPairs, isEmpty, has} from 'lodash';
+import { fromPairs, isEmpty, has, keys, maxBy,groupBy } from 'lodash';
 
 export class Store {
   engine;
@@ -57,26 +57,26 @@ export class Store {
         }
       }
     }
-    const {optionSets, program: {programTrackedEntityAttributes}, me: {organisationUnits}} = await this.engine.query(q);
-    const processedOptionSets = optionSets.optionSets.map(({name, options}) => {
+    const { optionSets, program: { programTrackedEntityAttributes }, me: { organisationUnits } } = await this.engine.query(q);
+    const processedOptionSets = optionSets.optionSets.map(({ name, options }) => {
       const optionsMap = fromPairs(options.map(o => [o.code, o.name]));
       return [name, optionsMap]
-    }) ;
+    });
     this.options = fromPairs(processedOptionSets);
 
-    this.availableAttributes = programTrackedEntityAttributes.map(({displayInList: selected, trackedEntityAttribute}) => {
-      return {...trackedEntityAttribute, selected};
+    this.availableAttributes = programTrackedEntityAttributes.map(({ displayInList: selected, trackedEntityAttribute }) => {
+      return { ...trackedEntityAttribute, selected };
     });
 
-    this.availableAttributes = [...this.availableAttributes, {id:'ouname',name:'ouname',selected: true}]
+    this.availableAttributes = [...this.availableAttributes, { id: 'ouname', name: 'ouname', selected: true }]
 
     this.userOrgUnits = organisationUnits.map(ou => ou.id).join(';');
   }
 
   queryData = async () => {
     await this.queryOptions();
-    const {trackedEntityInstances} = await this.engine.query(this.currentQuery);
-    const {metaData: {pager}} = trackedEntityInstances;
+    const { trackedEntityInstances } = await this.engine.query(this.currentQuery);
+    const { metaData: { pager } } = trackedEntityInstances;
     this.pageSize = pager.pageSize;
     this.total = pager.total;
     this.page = pager.page;
@@ -105,7 +105,7 @@ export class Store {
           params
         }
       }
-      const {trackedEntityInstances} = await this.engine.query(q);
+      const { trackedEntityInstances } = await this.engine.query(q);
       const headers = trackedEntityInstances.headers.map(h => h['name']);
       this.otherInstances = trackedEntityInstances.rows.map(r => {
         return Object.assign.apply({}, headers.map((v, i) => ({
@@ -115,33 +115,45 @@ export class Store {
     }
   }
 
-  queryOneInstances = async (poe) => {
+  queryOneInstances = async (tei) => {
     await this.queryOptions();
     const params = {
       ouMode: 'DESCENDANTS',
+      fields: '*',
       ou: this.userOrgUnits,
       program: this.programId,
-      skipPaging: 'true',
-      attribute: `CLzIR1Ye97b:EQ:${poe}`
+      skipPaging: 'true'
     };
     const q = {
-      trackedEntityInstances: {
-        resource: 'trackedEntityInstances/query.json',
+      trackedEntityInstance: {
+        resource: `trackedEntityInstances/${tei}.json`,
         params
       }
     }
-    const {trackedEntityInstances} = await this.engine.query(q);
-    if (trackedEntityInstances.rows.length > 0) {
-      const row = trackedEntityInstances.rows[0];
-      this.currentHeaders = trackedEntityInstances.headers;
-      const finalRow = this.currentHeaders.map((col, index) => {
-        return [col.name, row[index]];
+    let processedData = {};
+    const { trackedEntityInstance } = await this.engine.query(q);
+    const { attributes, enrollments, ...others } = trackedEntityInstance;
+    const allAttributes = fromPairs(attributes.map(dv => {
+      return [dv.attribute, dv.value]
+    }));
+    processedData = { ...others, ...processedData, ...allAttributes }
+    const enrollment = enrollments.find(e => e.program === this.programId);
+    if (enrollment) {
+      const { events, relationships, attributes, ...others } = enrollment;
+      const evs = groupBy(events, 'programStage');
+      const processedEvents = keys(evs).map(k => {
+        const { dataValues, ...event } = maxBy(evs[k], 'eventDate');
+        const dvs = fromPairs(dataValues.map(dv => {
+          return [dv.dataElement, dv.value]
+        }));
+        return [k, { ...dvs, ...event }]
       });
-      this.currentInstance = fromPairs(finalRow);
-      await this.queryOtherInstances(this.currentInstance.h6aZFN4DLcR)
+      const allEvents = fromPairs(processedEvents);
+      processedData = { ...processedData, ...allEvents, ...others };
     }
+    this.currentInstance = processedData;
+    await this.queryOtherInstances(this.currentInstance.h6aZFN4DLcR);
   }
-
   onSearch = async (e) => {
     this.page = 1;
     this.query = e.target.value;
@@ -168,7 +180,7 @@ export class Store {
   includeColumns = (id) => (e) => {
     const attributes = this.availableAttributes.map((col) => {
       if (col.id === id) {
-        return {...col, selected: e.target.checked}
+        return { ...col, selected: e.target.checked }
       }
       return col;
     });
@@ -186,7 +198,7 @@ export class Store {
       order: this.sorter
     };
     if (this.query !== '') {
-      params = {...params, query: `LIKE:${this.query}`}
+      params = { ...params, query: `LIKE:${this.query}` }
     }
     return {
       trackedEntityInstances: {
