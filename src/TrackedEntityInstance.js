@@ -14,6 +14,7 @@ const InstanceData = observer(() => {
 	const store = useStore();
 	const [imageUrl, setImageUrl] = useState('');
 	const [verifier, setVerifier] = useState('');
+	const [results, setResults] = useState('');
 	// const [finalVerifier, setFinalVerifier] = useState('');
 	const { baseUrl } = useConfig();
 	const params = useParams();
@@ -27,8 +28,11 @@ const InstanceData = observer(() => {
 
 	useEffect(() => {
 		store.queryOneInstances(params.instance).then(() => {
+			if (store.currentInstance.cjl37qfdEK5 && store.currentInstance.cjl37qfdEK5.ovY6E8BSdto) {
+				setResults(store.currentInstance.cjl37qfdEK5.ovY6E8BSdto)
+			}
 			setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image?dimension=medium`);
-			setVerifier(AES.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou} \nNationality: ${store.currentInstance.XvETY1aTxuB} \nDOB: ${store.currentInstance.g4LJbkM0R24} \nSex: ${store.currentInstance.FZzQbW8AWVd} \nIdentification: ${store.currentInstance.oUqWGeHjj5C}`, AESKey).toString());
+			setVerifier(AES.encrypt(`Name: ${store.currentInstance.sB1IHYu2xQT} \nVehicle: ${store.currentInstance.h6aZFN4DLcR} \nPhone Number: ${store.currentInstance.E7u9XdW24SP} \nPoint of Entry: ${store.currentInstance.ouname} \nPOE ID: ${store.currentInstance.CLzIR1Ye97b} \nDHIS2: ${qr_dhis2_url} \nTEI: ${store.currentInstance.instance} \nPROGRAM: ${program} \nPROGRAMSTAGE: ${programStage} \nORGUNITID: ${store.currentInstance.ou} \nNationality: ${store.currentInstance.XvETY1aTxuB} \nDOB: ${store.currentInstance.g4LJbkM0R24} \nSex: ${store.currentInstance.FZzQbW8AWVd} \nIdentification: ${store.currentInstance.oUqWGeHjj5C}\nResults: ${results}`, AESKey).toString());
 		})
 	}, [store, params])
 
@@ -66,13 +70,10 @@ const InstanceData = observer(() => {
 						<td width="36%" vAlign="middle" className="s1">
 							<p className="MsoNormal">Full Names</p>
 						</td>
-						<td width="31%" vAlign="middle" className="s2">
+						<td width="31%" vAlign="middle" className="s2" colSpan={2}>
 							<p className="MsoNormal">
 								<span style={{ paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase" }}>{store.currentInstance.sB1IHYu2xQT}</span>
 							</p>
-						</td>
-						<td width="31%" vAlign="middle" className="s2">
-							<p className="MsoNormal">Photo</p>
 						</td>
 					</tr>
 					<tr>
@@ -87,7 +88,7 @@ const InstanceData = observer(() => {
 							</p>
 						</td>
 						<td width="31%" rowSpan={7} vAlign="middle" className="s3">
-							<div style={{ height: 254, overflow: 'hidden', }}>
+							<div style={{ height: 254, overflow: 'hidden', margin: 'auto' }}>
 								<img src={imageUrl} alt="Image" />
 							</div>
 						</td>
@@ -118,7 +119,7 @@ const InstanceData = observer(() => {
 						</td>
 						<td width="31%" vAlign="middle" className="s2">
 							<p className="MsoNormal">
-								<span style={{ paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase" }}>{store.currentInstance.ouname}</span>
+								<span style={{ paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase" }}>{store.currentInstance.PVXhTjVdB92}</span>
 							</p>
 						</td>
 					</tr>
@@ -281,19 +282,19 @@ const InstanceData = observer(() => {
 						<td width="31%" vAlign="middle" className="s2" >
 							<p className="MsoNormal">Official Stamp</p>
 						</td>
-						<td width="31%" vAlign="middle" className="s2" rowSpan={12}>
+						<td width="31%" vAlign="middle" className="s2" rowSpan={11}>
 							<p className="MsoNormal">
-								<p style={{margin:0}}>Malaba POE Incharge </p>
-								<p style={{margin:0}}>Turygyenda Dennis</p>
-								<p style={{margin:0}}>0772667596/0702667596 </p>
-								<p style={{margin:0}}>turyadennis@gmail.com</p>
+								<p style={{ margin: 0 }}>Malaba POE Incharge </p>
+								<p style={{ margin: 0 }}>Turyagyenda Dennis</p>
+								<p style={{ margin: 0 }}>0772667596/0702667596 </p>
+								<p style={{ margin: 0 }}>turyadennis@gmail.com</p>
 							</p>
-							<br/>
-							<br/>
+							<br />
+							<br />
 							<p className="MsoNormal">
-								<p style={{margin:0}}>Busia POE Incharge</p>
-								<p style={{margin:0}}>Mr. Wabwire Tonny Fredrick</p>
-								<p style={{margin:0}}>0772 883898/0756 883898</p>
+								<p style={{ margin: 0 }}>Busia POE Incharge</p>
+								<p style={{ margin: 0 }}>Mr. Wabwire Tonny Fredrick</p>
+								<p style={{ margin: 0 }}>0772 883898/0756 883898</p>
 							</p>
 						</td>
 					</tr>
@@ -370,6 +371,9 @@ const InstanceData = observer(() => {
 						</td>
 						<td width="31%" vAlign="middle" className="s2">
 							<p className="MsoNormal">&nbsp;</p>
+						</td>
+						<td width="31%" vAlign="middle" className="s2">
+							<p className="MsoNormal">Results: &nbsp; {results}</p>
 						</td>
 
 					</tr>
@@ -451,7 +455,7 @@ export const TrackedEntityInstance = observer(() => {
 						return {
 							onClick: event => {
 								store.closeDialog();
-								history.push(`/${record['CLzIR1Ye97b']}`);
+								history.push(`/${record['instance']}`);
 							},
 						};
 					}}
