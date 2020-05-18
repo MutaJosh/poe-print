@@ -284,8 +284,9 @@ const InstanceData = observer(() => {
 						<td width="31%" vAlign="middle" className="s2" rowSpan={12}>
 							<p className="MsoNormal">
 								<p style={{margin:0}}>Malaba POE Incharge </p>
-								<p style={{margin:0}}>Okula Chodrey</p>
-								<p style={{margin:0}}>0774 696637</p>
+								<p style={{margin:0}}>Turygyenda Dennis</p>
+								<p style={{margin:0}}>0772667596/0702667596 </p>
+								<p style={{margin:0}}>turyadennis@gmail.com</p>
 							</p>
 							<br/>
 							<br/>
