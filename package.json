@@ -1,6 +1,6 @@
 {
-  "name": "Covid19-Results",
-  "version": "1.0.9",
+  "name": "Covid19-eResults",
+  "version": "2.0",
   "description": "An app for printing Authorized Travel Pass for Cargo drivers and crew members into a country implmenting National Covid-19 Lockdown",
   "license": "BSD-3-Clause",
   "private": true,
@@ -21,8 +21,10 @@
     "@ant-design/icons": "^4.0.6",
     "@ckeditor/ckeditor5-build-classic": "^18.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@react-pdf/renderer": "^1.6.10",
     "acorn": "^6.4.1",
     "antd": "^4.1.2",
+    "axios": "^0.19.2",
     "crypto-js": "^4.0.0",
     "dayjs": "^1.8.24",
     "lodash": "^4.17.15",
@@ -30,6 +32,8 @@
     "mobx-react": "^6.2.2",
     "qrcode.react": "^1.0.0",
     "react-router-dom": "^5.1.2",
-    "react-to-print": "^2.6.3"
+    "react-script-tag": "^1.1.2",
+    "react-to-print": "^2.6.3",
+    "sendmail": "^1.6.1"
   }
 }

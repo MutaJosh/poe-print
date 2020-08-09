@@ -4,54 +4,75 @@ import {Link, useHistory, useParams} from 'react-router-dom'
 import {Menu, Modal, Table} from "antd";
 import QrCode from 'qrcode.react';
 import {useConfig} from '@dhis2/app-runtime';
-import {PrinterOutlined, EyeOutlined, HomeOutlined, FormOutlined} from '@ant-design/icons';
+import {PrinterOutlined, MessageOutlined, HomeOutlined, FormOutlined} from '@ant-design/icons';
 import {observer} from "mobx-react";
 import {useStore} from "./context/context";
 import {isEmpty} from "lodash";
+import PDFAttachment from "./PDFAttachment";
+import ScriptTag from 'react-script-tag';
 import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
+
+import { pdf } from "@react-pdf/renderer";
+import axios from "axios";
 
 const InstanceData = observer(() => {
     const store = useStore();
     const [imageUrl, setImageUrl] = useState('');
     const [verifier, setVerifier] = useState('');
-    // const [finalVerifier, setFinalVerifier] = useState('');
     const {baseUrl} = useConfig();
     const params = useParams();
     const AESKey = "COVID-19R35P0N5E-2020";
-    // const appCrypt = new SimpleCrypto(AESKey);
     const program = store.programId;
     const programStage = store.programStageID;
     const url = window.location.href;
-    const qr_dhis2_url = url.split("/api/")[0];
 
 
     useEffect(() => {
         store.queryOneInstances(params.instance).then(() => {
             setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-            setVerifier(AES.encrypt(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`, AESKey).toString());
+            setVerifier(AES.encrypt(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`,AESKey).toString());
         })
-    }, [store, params])
+    }, [store, params]);
 
+    const sendEmail = async () => {
+        const qrcanvas = document.querySelector('canvas');
+        const qrImage = qrcanvas.toDataURL('image/png');
+        const nationality = store.options['Countries'][store.currentInstance.hBcoBCZBWFb];
+        const blob = await pdf(<PDFAttachment instance={store.currentInstance} verifier={qrImage} nationality={nationality}/>).toBlob();
+        const reader = new FileReader();
+        const name = store.currentInstance.sB1IHYu2xQT;
+        const email = store.currentInstance.YVZnRB53ymX;
+        const fileName = store.currentInstance.sB1IHYu2xQT + "_" + store.currentInstance.ENRjVGxVL6l;
+        const testDate = store.currentInstance.iR8O4hSLHnu?store.currentInstance.LYZbB262AbI.kBNDcbtH4ii:"";
 
-    // console.log(textstring);
-    // console.log(JSON.stringify(store.currentInstance, null, 2));
-    console.log(store.currentInstance);
+        const body = "Dear "+name+", \nPlease find attached your recent COVID-19 (SARS-CoV-2 RT-PCR) test results for sample received on "+testDate+" \n#StaySafe.\n\n COVID-19 Response Team - Rwanda";
+        reader.addEventListener("loadend", async () => {
+            const d = reader.result.split("data:application/pdf;base64,");
+            await axios.post("https://api.gateplatforms.io/send", {
+                subject: "Your recent COVID-19 Test result attached",
+                recipient: email,
+                body: body,
+                fileName,
+                attachment: d[1]
+            });
+        });
+        reader.readAsDataURL(blob);
+    };
 
   return (<div>
     {!isEmpty(store.currentInstance) ?
         <div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
-          <div style={{display: 'flex', flexDirection: 'column',alignItems: 'center'}}>
             <div style={{display: 'flex', flexDirection: 'row', marginTop: '2px'}}>
-              <div style={{display: 'flex', flexDirection: 'column', flexBasis: '5%'}}>
-                <img src="rwanda.png" style={{width: '64px', marginBottom: '5px', marginTop: 5}}/>
-              </div>
-              <div style={{display: 'flex', flexDirection: 'column', flexBasis: '100%', marginLeft: '10px'}}>
-                <h3 style={{marginTop: '5px', textTransform: 'uppercase', marginLeft: 20}}>Republic of Rwanda</h3>
-                <span style={{fontWeight: 'bold', marginTop: '-18px',  textTransform: 'uppercase', fontSize: '1.5em'}}>Ministry of Health</span>
-              </div>
+                <div style={{alignContent: 'left', width: '30%', display: 'flex', flexDirection: 'column'}}>
+                    <img src="rbc.png" style={{width: 250, marginBottom: '5px', marginTop: 5}}/>
+                </div>
+                <div style={{alignContent: 'right', width: '70%'}}>
+                    <h3 style={{ color: 'green', fontSize: '2em'}}>Biomedical Services (BIOS) - National Reference Laboratory</h3>
+                    <span style={{fontWeight: 'bold',  textTransform: 'uppercase', fontSize: 14}}>ACCREDITED ISO-15189:2012</span><br/>
+                    <span style={{fontWeight: 'bold',  textTransform: 'uppercase', fontSize: 14}}>COVID-19 Result Report</span>
+                </div>
             </div>
-          </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
 
             <div style={{
@@ -100,12 +121,8 @@ const InstanceData = observer(() => {
                 </div>
               </div>
                 <div style={{marginLeft: "auto", marginRight: 30}}>
-                    <QrCode value={verifier} style={{marginBottom: 30, marginTop: 30, width: 128, height: 128}} renderAs="svg"/>
+                    <QrCode value={verifier} style={{marginBottom: 30, marginTop: 30, width: 128, height: 128}}/>
                 </div>
-
-                {/*<div style={{marginTop: 20}}>*/}
-                {/*    <QrCode value={verifier} style={{marginBottom: 20, width: 128, height: 128}} renderAs="svg"/>*/}
-                {/*</div>*/}
             </div>
           </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -132,7 +149,7 @@ const InstanceData = observer(() => {
                 <div style={{marginTop: 5}}>
                   <span>Email Address:</span>
                   <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>
-                 {store.options['Countries'][store.currentInstance.YVZnRB53ymX]}
+                 {store.currentInstance.YVZnRB53ymX}
                 </span>
                 </div>
                 <div style={{marginTop: 5}}>
@@ -212,6 +229,14 @@ const InstanceData = observer(() => {
                 </div>
               </div>
             </div>
+              {(store.currentInstance.YVZnRB53ymX && store.currentInstance.dDHkBd3X8Ce ) ? <div><
+                  style type="text/css">
+                        {`@media print {.emailer { display: none; }}`}
+                  </style>
+                  <div className="emailer">
+                      <button onClick={sendEmail}>SEND AS EMAIL</button>
+                  </div></div>: ""
+              }
           </div>
         </div> : <div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
 
@@ -224,7 +249,7 @@ const InstanceData = observer(() => {
             alignContent: 'center',
             paddingLeft: 20
           }}>
-            NO DATA FOR AVAILABLE NOW FOR THE SPECIFIED INSTANCE. Please Reload by clicking the link below
+            NO DATA AVAILABLE NOW FOR THE SPECIFIED INSTANCE. Please Reload by clicking the link below
           </div>
           <div style={{display: 'flex', padding: 20}}>
             <div style={{display: 'flex', flexDirection: 'column', width: '100%',alignItems: 'center', alignContent: 'center' }}>
@@ -248,8 +273,6 @@ class Instance extends React.Component {
 export const TrackedEntityInstance = observer(() => {
   const componentRef = useRef();
   const store = useStore();
-
-  // console.log(store);
   const history = useHistory();
   return (
       <div>
@@ -261,7 +284,7 @@ export const TrackedEntityInstance = observer(() => {
                 </span>}
                 content={() => componentRef.current}
             />
-          </Menu.Item>
+        </Menu.Item>
           <Menu.Item key="home">
             <Link to="/">
               <HomeOutlined/>
