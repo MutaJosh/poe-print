@@ -168,7 +168,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                         }}>
                                             <Text style={{fontWeight: 'bolder',fontSize: 13}}>Date Specimen recieved: {tei.LYZbB262AbI ? tei.LYZbB262AbI.kBNDcbtH4ii : ""}</Text>
                                         </View>
-                                        <View style={{marginTop: 5, backgroundColor: 'yellow'}}>
+                                        <View style={{marginTop: 5}}>
                                             <Text style={{ fontWeight: 'bolder',fontSize: 13}}>SARS-CoV-2 RT-PCR Result: {tei.dDHkBd3X8Ce ? tei.dDHkBd3X8Ce.ovY6E8BSdto : ""}</Text>
                                         </View>
                                     </View>
@@ -193,7 +193,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                 <View style={{alignContent: 'left', flexDirection: 'row'}} wrap={false}>
                                     <View style={{alignContent: 'left', width: '50%'}}>
                                         <Image src="rbc_stamp.png" style={{ width: 120, marginBottom: '5px', marginTop: 5}}/>
-                                        <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'left', fontSize: 12}}>Date: 2020-07-23</Text>
+                                        <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'left', fontSize: 12}}>Date: {moment().format("YYYY-mm-dd h:mm:ss a")}</Text>
                                     </View>
                                     <View style={{alignContent: 'right', width: '50%'}} >
                                         <Image src="rbc_sign.png" style={{ width: 160, marginBottom: '5px', marginTop: 5}}/>

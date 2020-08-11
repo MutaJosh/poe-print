@@ -30,6 +30,7 @@
     "lodash": "^4.17.15",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
+    "moment": "^2.27.0",
     "qrcode.react": "^1.0.0",
     "react-router-dom": "^5.1.2",
     "react-script-tag": "^1.1.2",
