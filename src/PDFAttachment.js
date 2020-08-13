@@ -28,7 +28,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                         </View>
                         <View style={{alignContent: 'right', width: '80%'}} >
                             <Text style={{marginTop: 20, fontWeight: 200, textAlign:'right', color: 'green', fontSize: 12}}>Biomedical Services (BIOS) - National Reference Laboratory</Text>
-                            <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'center', fontSize: 12}}>ACCREDITED ISO-15189:2012</Text>
+                            <Text style={{marginTop: 5, fontWeight: 'bolder', textAlign:'center', fontSize: 16}}>ACCREDITED ISO-15189:2012</Text>
                             <Text style={{ marginTop: 2, fontWeight: 'bold', textAlign:'center', fontSize: 12}}>COVID-19 Result Report</Text>
                         </View>
                     </View>
@@ -124,7 +124,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                             <View style={{display: 'flex', padding: 5}}>
                                 <View style={{flex: 1, width: '70%'}}>
                                     <View>
-                                        <Text style={{fontWeight: 'bolder',fontSize: 13}}>Telephone (local): {tei.fctSQp5nAYl}</Text>
+                                        <Text style={{fontWeight: 'bolder',fontSize: 13}}>Telephone: {tei.fctSQp5nAYl}</Text>
                                     </View>
                                     <View style={{marginTop: 5}}>
                                         <Text style={{ fontWeight: 'bolder',fontSize: 13}}>
@@ -193,7 +193,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                 <View style={{alignContent: 'left', flexDirection: 'row'}} wrap={false}>
                                     <View style={{alignContent: 'left', width: '50%'}}>
                                         <Image src="rbc_stamp.png" style={{ width: 120, marginBottom: '5px', marginTop: 5}}/>
-                                        <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'left', fontSize: 12}}>Date: {moment().format("YYYY-mm-dd h:mm:ss a")}</Text>
+                                        <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'left', fontSize: 12}}>Date: xxxxxxxxx</Text>
                                     </View>
                                     <View style={{alignContent: 'right', width: '50%'}} >
                                         <Image src="rbc_sign.png" style={{ width: 160, marginBottom: '5px', marginTop: 5}}/>

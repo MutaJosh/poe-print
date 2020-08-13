@@ -66,76 +66,124 @@ const InstanceData = observer(() => {
         {!isEmpty(store.currentInstance) ?
             <div style={{padding: 20, display: 'flex', flexDirection: 'column', fontSize: 'large'}}>
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: '2px'}}>
-                    <div style={{alignContent: 'left', display: 'flex'}}>
+                    <div style={{alignContent: 'left', display: 'flex', width: '20%'}}>
                         <img src="rbc.png" style={{width: 250, marginBottom: '5px', marginTop: 5}}/>
                     </div>
-                    <div style={{alignItems: 'right', marginLeft: 30}}>
+                    <div style={{textAlign: 'center', width: '80%'}}>
                         <h3 style={{color: 'green', fontSize: '1.2em', alignItems: 'right'}}>Biomedical Services (BIOS) - National Reference Laboratory</h3>
-                        <span style={{fontWeight: 'bold', textTransform: 'uppercase', fontSize: 12, alignItems: 'center'}}>ACCREDITED ISO-15189:2012</span><br/>
-                        <span style={{fontWeight: 'bold', textTransform: 'uppercase', fontSize: 12}}>COVID-19 Result Report</span>
+                        <span style={{fontWeight: 'bolder', textTransform: 'uppercase', fontSize: 20, alignItems: 'center'}}>ACCREDITED ISO-15189:2012</span><br/>
+                        <span style={{fontWeight: 'bold', textTransform: 'uppercase', fontSize: 13, alignItems: 'center'}}>COVID-19 Result Report</span>
                     </div>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-
+                <div style={{flex: 1, flexDirection: 'column'}}>
                     <div style={{
                         width: '100%',
-                        background: '#c6d3dc',
+                        backgroundColor: '#c6d3dc',
                         color: '#FFFFFF',
-                        height: 32,
-                        display: 'flex',
-                        alignItems: 'center',
-                        alignContent: 'center',
+                        flex: 1,
+                        textAlign: 'left',
+                        alignContent: 'left',
                         paddingLeft: 10,
                         marginTop: 20
-                    }} className="section-head">
-                        Vital Case Information
-                    </div>
-                    <div style={{display: 'flex', padding: 10}}>
-
-                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <div>
-                                <span>Unique ID:</span>
-                                <span style={{
-                                    paddingLeft: 5,
-                                    fontWeight: 'bolder',
-                                    textTransform: "uppercase"
-                                }}>{store.currentInstance.he05i8FUwu3}</span>
-                            </div>
-                            <div style={{marginTop: 5}}>
-                                <span>Full Name:</span>
-                                <span style={{
-                                    paddingLeft: 5,
-                                    fontWeight: 'bolder',
-                                    textTransform: "uppercase"
-                                }}>{store.currentInstance.sB1IHYu2xQT + " " + store.currentInstance.ENRjVGxVL6l} </span>
-                            </div>
-                            <div style={{marginTop: 5}}>
-                                <span>Sex:</span>
-                                <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
-                      {store.currentInstance.oindugucx72}
-                  </span>
-                            </div>
-                            <div style={{marginTop: 5}}>
-                                <span>Date of Birth:</span>
-                                <span style={{
-                                    paddingLeft: 5,
-                                    fontWeight: 'bolder',
-                                    textTransform: "uppercase"
-                                }}>{store.currentInstance.NI0QRzJvQ0k}</span>
-                            </div>
-                            <div style={{marginTop: 5}}>
-                                <span>Nationality:</span>
-                                <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
-                      {store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}
-                  </span>
-                            </div>
-                        </div>
-                        <div style={{marginLeft: "auto", marginRight: 30}}>
-                            <QrCode value={verifier}
-                                    style={{marginBottom: 30, marginTop: 30, width: 128, height: 128}}/>
-                        </div>
+                        }}>
+                        <span>Lab Contact Information</span>
                     </div>
                 </div>
+
+                <div style={{display: 'flex', padding: 10}}>
+
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <div>
+                            <span>Address:</span>
+                            <span style={{
+                                paddingLeft: 5,
+                                fontWeight: 'bold',
+                                textTransform: "uppercase"
+                            }}> PO BOX 4668 KIGALI-RWANDA </span>
+                        </div>
+                        <div style={{marginTop: 5}}>
+                            <span>Telephone:</span>
+                            <span style={{
+                                paddingLeft: 5,
+                                fontWeight: 'bold',
+                                textTransform: "uppercase"
+                            }}> +(250) 781 415 724 </span>
+                        </div>
+                        <div style={{marginTop: 5}}>
+                            <span>Email:</span>
+                            <span style={{paddingLeft: 5, fontWeight: 'bold'}}>
+                                covid19@rbc.gov.rw
+                            </span>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+
+
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <div style={{
+                            width: '100%',
+                            background: '#c6d3dc',
+                            color: '#FFFFFF',
+                            height: 32,
+                            display: 'flex',
+                            alignItems: 'center',
+                            alignContent: 'center',
+                            paddingLeft: 10,
+                            marginTop: 20
+                            }} className="section-head">
+                            Vital Case Information
+                        </div>
+                        <div style={{display: 'flex', padding: 10}}>
+
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <div>
+                                    <span>Unique ID:</span>
+                                    <span style={{
+                                        paddingLeft: 5,
+                                        fontWeight: 'bolder',
+                                        textTransform: "uppercase"
+                                    }}>{store.currentInstance.he05i8FUwu3}</span>
+                                </div>
+                                <div style={{marginTop: 5}}>
+                                    <span>Full Name:</span>
+                                    <span style={{
+                                        paddingLeft: 5,
+                                        fontWeight: 'bolder',
+                                        textTransform: "uppercase"
+                                    }}>{store.currentInstance.sB1IHYu2xQT + " " + store.currentInstance.ENRjVGxVL6l} </span>
+                                </div>
+                                <div style={{marginTop: 5}}>
+                                    <span>Sex:</span>
+                                    <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
+                                        {store.currentInstance.oindugucx72}
+                                    </span>
+                                </div>
+                                <div style={{marginTop: 5}}>
+                                    <span>Date of Birth:</span>
+                                    <span style={{
+                                        paddingLeft: 5,
+                                        fontWeight: 'bolder',
+                                        textTransform: "uppercase"
+                                    }}>{store.currentInstance.NI0QRzJvQ0k}</span>
+                                </div>
+                                <div style={{marginTop: 5}}>
+                                    <span>Nationality:</span>
+                                    <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
+                                        {store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}
+                                    </span>
+                                </div>
+                            </div>
+                            <div style={{marginLeft: "auto", marginRight: 30}}>
+                                <QrCode value={verifier}
+                                        style={{marginBottom: 30, marginTop: 30, width: 128, height: 128}}/>
+                            </div>
+                        </div>
+                    </div>
+
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <div style={{
                         width: '100%',
@@ -163,14 +211,14 @@ const InstanceData = observer(() => {
                             <div style={{marginTop: 5}}>
                                 <span>Email Address:</span>
                                 <span style={{paddingLeft: 5, fontWeight: 'bolder'}}>
-                 {store.currentInstance.YVZnRB53ymX}
-                </span>
+                                    {store.currentInstance.YVZnRB53ymX}
+                                </span>
                             </div>
                             <div style={{marginTop: 5}}>
                                 <span>Country of Residence:</span>
                                 <span style={{paddingLeft: 5, fontWeight: 'bolder', textTransform: "uppercase"}}>
-                  {store.options['Countries'][store.currentInstance.egZSEmMeCeB]}
-                </span>
+                                    {store.options['Countries'][store.currentInstance.egZSEmMeCeB]}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -192,7 +240,7 @@ const InstanceData = observer(() => {
                     <div style={{display: 'flex', padding: 10}}>
                         <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                             <div>
-                                <span>Date Specimen Collected:</span>
+                                <span>Date of Specimen Collection:</span>
                                 <span style={{
                                     paddingLeft: 5,
                                     fontWeight: 'bolder'
@@ -205,14 +253,14 @@ const InstanceData = observer(() => {
                                 flexBasis: '100%',
                                 width: '100%'
                             }}>
-                                <span>Date Specimen recieved: </span>
+                                <span>Date of Test Result: </span>
                                 <span style={{
                                     paddingLeft: 5,
                                     fontWeight: 'bolder'
-                                }}>{store.currentInstance.LYZbB262AbI ? store.currentInstance.LYZbB262AbI.kBNDcbtH4ii : ""}</span>
+                                }}> xxxxxxx </span>
                             </div>
                             <div style={{marginTop: 5}}>
-                                <span>Test Result:</span>
+                                <span>SARS-CoV-2 RT-PCR Result:</span>
                                 <span style={{
                                     paddingLeft: 5,
                                     fontWeight: 'bolder'
@@ -221,6 +269,7 @@ const InstanceData = observer(() => {
                         </div>
                     </div>
                 </div>
+
                 <div style={{display: 'flex', flexDirection: 'column'}} className="approval">
                     <style type="text/css">
                         {`@media print {.approval { display: none; }}`}
