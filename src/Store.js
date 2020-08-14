@@ -193,7 +193,7 @@ export class Store {
   get currentQuery() {
     let params = {
       page: this.page,
-      totalPages: 'true',
+      totalPages: 'false',
       ouMode: 'DESCENDANTS',
       ou: this.userOrgUnits,
       program: this.programId,

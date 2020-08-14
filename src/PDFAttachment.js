@@ -27,9 +27,9 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                             <Image src="rbc.png" style={{ width: 200, marginBottom: '5px', marginTop: 5}}/>
                         </View>
                         <View style={{alignContent: 'right', width: '80%'}} >
-                            <Text style={{marginTop: 20, fontWeight: 200, textAlign:'right', color: 'green', fontSize: 12}}>Biomedical Services (BIOS) - National Reference Laboratory</Text>
-                            <Text style={{marginTop: 5, fontWeight: 'bolder', textAlign:'center', fontSize: 16}}>ACCREDITED ISO-15189:2012</Text>
-                            <Text style={{ marginTop: 2, fontWeight: 'bold', textAlign:'center', fontSize: 12}}>COVID-19 Result Report</Text>
+                            <Text style={{marginTop: 20, fontWeight: 400, textAlign:'right', color: 'green', fontSize: 12}}>Biomedical Services (BIOS) - National Reference Laboratory</Text>
+                            <Text style={{marginTop: 5, fontWeight: 800, textAlign:'center', fontSize: 14, marginLeft: 70}}>ACCREDITED ISO-15189:2012</Text>
+                            <Text style={{ marginTop: 2, fontWeight: 'bold', textAlign:'center', fontSize: 12, marginLeft: 70}}>COVID-19 Result Report</Text>
                         </View>
                     </View>
                     <View style={{alignContent: 'left'}}>
@@ -100,7 +100,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                 </View>
                                 <View style={{marginLeft: 'auto', marginRight: 10}}>
                                     <View style={{marginLeft: "auto", marginRight: 30}}>
-                                        <Image src={verifier} style={{ width: 128, height: 128, marginBottom: '5px', marginTop: 10}}/>
+                                        <Image src={verifier} style={{ width: 128, height: 128, marginBottom: '5px', marginTop: 10, marginRight: 20}}/>
                                     </View>
                                 </View>
                             </View>
@@ -133,7 +133,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                     </View>
                                     <View style={{marginTop: 5}}>
                                         <Text style={{ fontWeight: 'bolder',fontSize: 13}}>
-                                            Country of Residence: {tei.egZSEmMeCeB}
+                                            Country of Residence: {tei.hBcoBCZBWFb}
                                         </Text>
                                     </View>
                                 </View>
@@ -157,7 +157,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                 <View style={{flex: 1, padding: 5}}>
                                     <View style={{flex: 1, width: '100%'}}>
                                         <View>
-                                            <Text style={{fontWeight: 'bolder',fontSize: 13}}>Date Specimen Collected: {tei.iR8O4hSLHnu ? tei.iR8O4hSLHnu.Q98LhagGLFj : ""}</Text>
+                                            <Text style={{fontWeight: 'bolder',fontSize: 13}}>Date of Specimen Collection: {tei.iR8O4hSLHnu ? tei.iR8O4hSLHnu.Q98LhagGLFj : ""}</Text>
                                         </View>
                                         <View style={{
                                             marginTop: 5,
@@ -166,10 +166,10 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                             flexBasis: '100%',
                                             width: '100%'
                                         }}>
-                                            <Text style={{fontWeight: 'bolder',fontSize: 13}}>Date Specimen recieved: {tei.LYZbB262AbI ? tei.LYZbB262AbI.kBNDcbtH4ii : ""}</Text>
+                                            <Text style={{fontWeight: 'bolder',fontSize: 13}}>Date of Test Result: {tei.dDHkBd3X8Ce ? tei.dDHkBd3X8Ce.Cl2I1H6Y3oj : ""}  </Text>
                                         </View>
                                         <View style={{marginTop: 5}}>
-                                            <Text style={{ fontWeight: 'bolder',fontSize: 13}}>SARS-CoV-2 RT-PCR Result: {tei.dDHkBd3X8Ce ? tei.dDHkBd3X8Ce.ovY6E8BSdto : ""}</Text>
+                                            <Text style={{ fontWeight: 'bolder',fontSize: 13 }}>SARS-CoV-2 RT-PCR Result: {tei.dDHkBd3X8Ce ? tei.dDHkBd3X8Ce.ovY6E8BSdto : ""}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -193,7 +193,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                 <View style={{alignContent: 'left', flexDirection: 'row'}} wrap={false}>
                                     <View style={{alignContent: 'left', width: '50%'}}>
                                         <Image src="rbc_stamp.png" style={{ width: 120, marginBottom: '5px', marginTop: 5}}/>
-                                        <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'left', fontSize: 12}}>Date: xxxxxxxxx</Text>
+                                        <Text style={{marginTop: 5, fontWeight: 'bold', textAlign:'left', fontSize: 12, marginLeft: 50}}>Date: {tei.dDHkBd3X8Ce ? tei.dDHkBd3X8Ce.Cl2I1H6Y3oj : ""} </Text>
                                     </View>
                                     <View style={{alignContent: 'right', width: '50%'}} >
                                         <Image src="rbc_sign.png" style={{ width: 160, marginBottom: '5px', marginTop: 5}}/>

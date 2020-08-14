@@ -28,15 +28,18 @@ const InstanceData = observer(() => {
     const programStage = store.programStageID;
     const url = window.location.href;
 
-
+// \nLastname: ${store.currentInstance.ENRjVGxVL6l}
     useEffect(() => {
         store.queryOneInstances(params.instance).then(() => {
             setImageUrl(`${baseUrl}/api/trackedEntityInstances/${store.currentInstance.instance}/AsnwhQvSeMy/image`);
-            setVerifier(AES.encrypt(`Case ID: ${store.currentInstance.he05i8FUwu3} \nFirstname: ${store.currentInstance.sB1IHYu2xQT} \nLastname: ${store.currentInstance.ENRjVGxVL6l} \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nPhone Number: ${store.currentInstance.fctSQp5nAYl} \nNationality: ${store.options['Countries'][store.currentInstance.hBcoBCZBWFb]}`, AESKey).toString());
+            setVerifier(AES.encrypt(`Unique ID: ${store.currentInstance.he05i8FUwu3} \nFull Name: ${store.currentInstance.sB1IHYu2xQT} \t ${store.currentInstance.ENRjVGxVL6l}  \nDate of birth: ${store.currentInstance.NI0QRzJvQ0k} \nCOVID-19 Test Result: ${store.currentInstance.dDHkBd3X8Ce ? store.currentInstance.dDHkBd3X8Ce.ovY6E8BSdto : ""} \nDate of Test Result: ${store.currentInstance.dDHkBd3X8Ce ? store.currentInstance.dDHkBd3X8Ce.Cl2I1H6Y3oj : moment().format("YYYY-MM-DD h:mm:ss a")}`, AESKey).toString());
         })
     }, [store, params]);
 
     const sendEmail = async () => {
+        // Alert for the email sending
+        alert("Email sent successfully!");
+
         const qrcanvas = document.querySelector('canvas');
         const qrImage = qrcanvas.toDataURL('image/png');
         const nationality = store.options['Countries'][store.currentInstance.hBcoBCZBWFb];
@@ -48,7 +51,7 @@ const InstanceData = observer(() => {
         const fileName = store.currentInstance.sB1IHYu2xQT + "_" + store.currentInstance.ENRjVGxVL6l;
         const testDate = store.currentInstance.iR8O4hSLHnu ? store.currentInstance.LYZbB262AbI.kBNDcbtH4ii : "";
 
-        const body = "Dear " + name + ", \nPlease find attached your recent COVID-19 (SARS-CoV-2 RT-PCR) test results for sample received on " + testDate + " \n#StaySafe.\n\n COVID-19 Response Team - Rwanda";
+        const body = "Dear " + name + ", \n\nPlease find attached your recent COVID-19 (SARS-CoV-2 RT-PCR) test results for sample taken on " + testDate + " \n\n#StaySafe.\n\n COVID-19 Response Team - Rwanda";
         reader.addEventListener("loadend", async () => {
             const d = reader.result.split("data:application/pdf;base64,");
             await axios.post("https://api.gateplatforms.io/send", {
@@ -60,6 +63,7 @@ const InstanceData = observer(() => {
             });
         });
         reader.readAsDataURL(blob);
+
     };
 
     return (<div>
@@ -90,7 +94,7 @@ const InstanceData = observer(() => {
                     </div>
                 </div>
 
-                <div style={{display: 'flex', padding: 10}}>
+                <div style={{display: 'flex', padding: 10 }}>
 
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         <div>
@@ -177,7 +181,7 @@ const InstanceData = observer(() => {
                                     </span>
                                 </div>
                             </div>
-                            <div style={{marginLeft: "auto", marginRight: 30}}>
+                            <div style={{marginLeft: "auto", marginRight: '35%'}}>
                                 <QrCode value={verifier}
                                         style={{marginBottom: 30, marginTop: 30, width: 128, height: 128}}/>
                             </div>
@@ -197,11 +201,11 @@ const InstanceData = observer(() => {
                     }} className="section-head">
                         Address and Contact Information
                     </div>
-                    <div style={{display: 'flex', padding: 10}}>
+                    <div style={{display: 'flex', padding: 10, paddingBottom: '2%'}}>
                         <div style={{display: 'flex', flexDirection: 'column', width: '70%'}}>
 
                             <div>
-                                <span>Telephone (local):</span>
+                                <span>Telephone:</span>
                                 <span style={{
                                     paddingLeft: 5,
                                     fontWeight: 'bolder',
@@ -237,7 +241,7 @@ const InstanceData = observer(() => {
                     }} className="section-head">
                         COVID-19 Investigation and Tests
                     </div>
-                    <div style={{display: 'flex', padding: 10}}>
+                    <div style={{display: 'flex', padding: 10, paddingBottom: '2%'}}>
                         <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                             <div>
                                 <span>Date of Specimen Collection:</span>
@@ -257,14 +261,15 @@ const InstanceData = observer(() => {
                                 <span style={{
                                     paddingLeft: 5,
                                     fontWeight: 'bolder'
-                                }}> xxxxxxx </span>
+                                }}> {store.currentInstance.dDHkBd3X8Ce ? store.currentInstance.dDHkBd3X8Ce.Cl2I1H6Y3oj : moment().format("YYYY-MM-DD h:mm:ss a")}  </span>
                             </div>
                             <div style={{marginTop: 5}}>
                                 <span>SARS-CoV-2 RT-PCR Result:</span>
                                 <span style={{
                                     paddingLeft: 5,
-                                    fontWeight: 'bolder'
-                                }}>{store.currentInstance.dDHkBd3X8Ce ? store.currentInstance.dDHkBd3X8Ce.ovY6E8BSdto : ""}</span>
+                                    fontWeight: 'bolder',
+                                    textTransform: "uppercase"
+                                }}> {store.currentInstance.dDHkBd3X8Ce ? store.currentInstance.dDHkBd3X8Ce.ovY6E8BSdto : ""} </span>
                             </div>
                         </div>
                     </div>
@@ -329,8 +334,8 @@ const InstanceData = observer(() => {
                         <style type="text/css">
                             {`@media print {.emailer { display: none; }}`}
                         </style>
-                        <div className="emailer">
-                            <button onClick={sendEmail}>SEND AS EMAIL</button>
+                        <div  style={{ textAlign: 'right', paddingRight: '5%', paddingBottom: '3%' }} className="emailer">
+                            <button onClick={sendEmail}> SEND AS EMAIL </button>
                         </div>
                     </div> : ""
                     }
@@ -420,8 +425,9 @@ export const TrackedEntityInstance = observer(() => {
                     onRow={(record, rowIndex) => {
                         return {
                             onClick: event => {
-                                store.closeDialog();
-                                history.push(`/${record['CLzIR1Ye97b']}`);
+                                // store.closeDialog();
+                                // history.push(`/${record['CLzIR1Ye97b']}`);
+                                alert.show("Hello");
                             },
                         };
                     }}
