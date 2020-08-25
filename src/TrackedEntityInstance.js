@@ -43,8 +43,9 @@ const InstanceData = observer(() => {
         const qrcanvas = document.querySelector('canvas');
         const qrImage = qrcanvas.toDataURL('image/png');
         const nationality = store.options['Countries'][store.currentInstance.hBcoBCZBWFb];
+        const c_of_resd = store.options['Countries'][store.currentInstance.egZSEmMeCeB];
         const blob = await pdf(<PDFAttachment instance={store.currentInstance} verifier={qrImage}
-                                              nationality={nationality}/>).toBlob();
+                                              nationality={nationality} c_of_resd={c_of_resd}/>).toBlob();
         const reader = new FileReader();
         const name = store.currentInstance.sB1IHYu2xQT;
         const email = store.currentInstance.YVZnRB53ymX;

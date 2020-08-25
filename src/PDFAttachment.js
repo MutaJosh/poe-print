@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const PDFAttachment = ({instance, verifier, nationality}) => {
+const PDFAttachment = ({instance, verifier, nationality, c_of_resd}) => {
     const tei = instance;
     return (
         <Document>
@@ -28,7 +28,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                         </View>
                         <View style={{alignContent: 'right', width: '80%'}} >
                             <Text style={{marginTop: 20, fontWeight: 400, textAlign:'right', color: 'green', fontSize: 12}}>Biomedical Services (BIOS) - National Reference Laboratory</Text>
-                            <Text style={{marginTop: 5, fontWeight: 800, textAlign:'center', fontSize: 14, marginLeft: 70}}>ACCREDITED ISO-15189:2012</Text>
+                            <Text style={{marginTop: 5, fontWeight: 800, textAlign:'center', fontSize: 14, marginLeft: 70, fontWeight: 'bolder'}}>ACCREDITED ISO-15189:2012</Text>
                             <Text style={{ marginTop: 2, fontWeight: 'bold', textAlign:'center', fontSize: 12, marginLeft: 70}}>COVID-19 Result Report</Text>
                         </View>
                     </View>
@@ -50,7 +50,9 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                 </View>
                                 <View style={{alignContent: 'left', flexDirection: 'row'}} wrap={false}>
                                     <View style={{alignContent: 'left', width: '40%'}}>
-                                        <Text style={{marginTop: 10, fontWeight: 'bold', textAlign:'left', fontSize: 10}}>Address: PO BOX 4668 KIGALI-RWANDA</Text>
+                                        <Text style={{marginTop: 10, fontWeight: 'bold', textAlign:'left', fontSize: 10}}>Address: 
+                                            <Text style={{marginTop: 10, fontWeight: 'bolder', fontSize: 10}}>PO BOX 4668 KIGALI-RWANDA</Text>
+                                        </Text>
                                     </View>
                                     <View style={{alignContent: 'right', width: '30%'}} >
                                         <Text style={{marginTop: 10, textAlign:'left', fontSize: 10}}>Telephone: +(250) 781 415 724</Text>
@@ -133,7 +135,7 @@ const PDFAttachment = ({instance, verifier, nationality}) => {
                                     </View>
                                     <View style={{marginTop: 5}}>
                                         <Text style={{ fontWeight: 'bolder',fontSize: 13}}>
-                                            Country of Residence: {tei.hBcoBCZBWFb}
+                                            Country of Residence: {c_of_resd}
                                         </Text>
                                     </View>
                                 </View>
